@@ -1,21 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections;
+﻿using System.Linq.Expressions;
 
 namespace InnoGotchiWebAPI.Domain.Interfaces
 {
-    internal interface IRepository<T> where T : class
+    public interface IRepository<T> where T : class
     {
-        DbSet<T> Entities { get; }
-        DbContext dbContext { get; }
+        IQueryable<T> FindAll(bool trackChanges);
+        IQueryable<T> FindByCondition(Expression<Func<T, bool>> exception,
+            bool trackChanges);
+        void Create(T entity);
+        void Update(T entity);
+        void Delete(T entity);
 
-        Task<IList> GetAllAsync();
-        T Find(params object[] keyValues);
-        Task<T> FindAsync(params object[] keyValues);
-        Task InsertAsync(params object[] keyValues);
-        Task InsertRangeAsync(IEnumerable objects, bool savechanges = true);
-        Task DeleteAsync(int id, bool savechanges = true);
-        Task DeleteAsync(T entity, bool savechanges = true);
-        Task DeleteRangeAsync(IEnumerable objects, bool savechanges = true);
 
 
     }

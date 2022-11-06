@@ -1,0 +1,12 @@
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Domain\obj\Debug\net6.0\InnoGotchiWebAPI.Domain.csproj.AssemblyReference.cache
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Domain\obj\Debug\net6.0\InnoGotchiWebAPI.Domain.GeneratedMSBuildEditorConfig.editorconfig
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Domain\obj\Debug\net6.0\InnoGotchiWebAPI.Domain.AssemblyInfoInputs.cache
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Domain\obj\Debug\net6.0\InnoGotchiWebAPI.Domain.AssemblyInfo.cs
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Domain\obj\Debug\net6.0\InnoGotchiWebAPI.Domain.csproj.CoreCompileInputs.cache
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Domain\bin\Debug\net6.0\InnoGotchiWebAPI.Domain.deps.json
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Domain\bin\Debug\net6.0\InnoGotchiWebAPI.Domain.dll
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Domain\bin\Debug\net6.0\InnoGotchiWebAPI.Domain.pdb
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Domain\obj\Debug\net6.0\InnoGotchiWebAPI.Domain.dll
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Domain\obj\Debug\net6.0\refint\InnoGotchiWebAPI.Domain.dll
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Domain\obj\Debug\net6.0\InnoGotchiWebAPI.Domain.pdb
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Domain\obj\Debug\net6.0\ref\InnoGotchiWebAPI.Domain.dll

@@ -1,0 +1,15 @@
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infrastructure\obj\Debug\net6.0\InnoGotchiWebAPI.Infrastructure.csproj.AssemblyReference.cache
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infrastructure\obj\Debug\net6.0\InnoGotchiWebAPI.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infrastructure\obj\Debug\net6.0\InnoGotchiWebAPI.Infrastructure.AssemblyInfoInputs.cache
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infrastructure\obj\Debug\net6.0\InnoGotchiWebAPI.Infrastructure.AssemblyInfo.cs
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infrastructure\obj\Debug\net6.0\InnoGotchiWebAPI.Infrastructure.csproj.CoreCompileInputs.cache
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infrastructure\bin\Debug\net6.0\InnoGotchiWebAPI.Infrastructure.deps.json
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infrastructure\bin\Debug\net6.0\InnoGotchiWebAPI.Infrastructure.dll
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infrastructure\bin\Debug\net6.0\InnoGotchiWebAPI.Infrastructure.pdb
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infrastructure\bin\Debug\net6.0\InnoGotchiWebAPI.Domain.dll
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infrastructure\bin\Debug\net6.0\InnoGotchiWebAPI.Domain.pdb
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infrastructure\obj\Debug\net6.0\InnoGotchiWebAPI.Infrastructure.csproj.CopyComplete
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infrastructure\obj\Debug\net6.0\InnoGotchiWebAPI.Infrastructure.dll
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infrastructure\obj\Debug\net6.0\refint\InnoGotchiWebAPI.Infrastructure.dll
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infrastructure\obj\Debug\net6.0\InnoGotchiWebAPI.Infrastructure.pdb
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infrastructure\obj\Debug\net6.0\ref\InnoGotchiWebAPI.Infrastructure.dll
