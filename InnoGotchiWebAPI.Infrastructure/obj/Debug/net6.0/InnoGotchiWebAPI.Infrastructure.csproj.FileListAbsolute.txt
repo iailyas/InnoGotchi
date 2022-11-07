@@ -13,3 +13,5 @@ F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infras
 F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infrastructure\obj\Debug\net6.0\refint\InnoGotchiWebAPI.Infrastructure.dll
 F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infrastructure\obj\Debug\net6.0\InnoGotchiWebAPI.Infrastructure.pdb
 F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infrastructure\obj\Debug\net6.0\ref\InnoGotchiWebAPI.Infrastructure.dll
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infrastructure\bin\Debug\net6.0\InnoGotchiWebAPI.Infrastructure.runtimeconfig.json
+F:\prog\myrepository\LabProjectInnowise\InnoGotchiWebAPI\InnoGotchiWebAPI.Infrastructure\obj\Debug\net6.0\InnoGotchiWebAPI.Infrastructure.genruntimeconfig.cache

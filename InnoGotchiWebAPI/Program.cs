@@ -2,7 +2,7 @@ using InnoGotchiWebAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<MainDbContext>(options => options.UseNpgsql(builder.Configuration["ConnectionStrings:ConnectionStrings"]));
+builder.Services.AddDbContext<MainDbContext>(options => options.UseNpgsql(builder.Configuration["ConnectionStrings:DefaultConnection"]));
 // Add services to the container.
 
 builder.Services.AddControllers();

@@ -21,6 +21,7 @@ namespace InnoGotchiWebAPI.Infrastructure
                 .HasMany(p => p.User)
                 .WithMany(b => b.Collaborations);
 
+
             modelBuilder.Entity<Farm>()
                 .HasOne(p => p.User)
                 .WithMany(b => b.Farms)
@@ -33,23 +34,28 @@ namespace InnoGotchiWebAPI.Infrastructure
 
             modelBuilder.Entity<Characteristic>()
                 .HasOne(p => p.Pet)
-                .WithMany(b => b.Characteristics);
+                .WithMany(b => b.Characteristics)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Look>()
                 .HasOne(p => p.Pet)
-                .WithMany(b => b.Looks);
+                .WithMany(b => b.Looks)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Pet>()
                .HasMany(p => p.Characteristics)
-               .WithOne(b => b.Pet);
+               .WithOne(b => b.Pet)
+               .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Pet>()
                .HasOne(p => p.Farm)
-               .WithMany(b => b.Pets);
+               .WithMany(b => b.Pets)
+               .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Pet>()
                .HasMany(p => p.Looks)
-               .WithOne(b => b.Pet);
+               .WithOne(b => b.Pet)
+               .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
                .HasMany(p => p.Collaborations)
@@ -57,7 +63,8 @@ namespace InnoGotchiWebAPI.Infrastructure
 
             modelBuilder.Entity<User>()
                .HasMany(p => p.Farms)
-               .WithOne(b => b.User);
+               .WithOne(b => b.User)
+               .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
