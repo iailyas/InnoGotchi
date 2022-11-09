@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InnoGotchiWebAPI.Domain\InnoGotchiWebAPI.Domain.csproj" />
+    <Compile Remove="Repositories\UnitOfWork.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
+    <ProjectReference Include="..\InnoGotchiWebAPI.Domain\InnoGotchiWebAPI.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

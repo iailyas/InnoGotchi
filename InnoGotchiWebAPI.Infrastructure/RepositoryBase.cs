@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace InnoGotchiWebAPI.Infrastructure
 {
-    public class RepositoryBase<T> : IRepository<T> where T : class
+    public abstract class RepositoryBase<T> : IRepository<T> where T : class
     {
         protected MainDbContext mainDbContext;
 
@@ -17,20 +17,9 @@ namespace InnoGotchiWebAPI.Infrastructure
 
         public void Delete(T entity) => mainDbContext.Set<T>().Remove(entity);
 
-        public IQueryable<T> FindAll(bool trackChanges) =>
-            !trackChanges ?
-            mainDbContext.Set<T>()
-            .AsNoTracking() :
-            mainDbContext.Set<T>();
+        public IQueryable<T> FindAll() => mainDbContext.Set<T>().AsNoTracking();
 
-        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression, bool trackChanges) =>
-            !trackChanges ?
-            mainDbContext.Set<T>()
-            .Where(expression)
-            .AsNoTracking() :
-            mainDbContext.Set<T>()
-            .Where(expression);
-
+        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> exception) => mainDbContext.Set<T>().Where(exception).AsNoTracking();
 
         public void Update(T entity) => mainDbContext.Set<T>().Update(entity);
     }
