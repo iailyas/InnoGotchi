@@ -1,6 +1,8 @@
-﻿using InnoGotchiWebAPI.Domain.Models;
+﻿using InnoGotchiWebAPI.Domain.DTO;
+using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Domain.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Xml.Linq;
 
 namespace InnoGotchiWebAPI.Controllers
 {
@@ -9,37 +11,53 @@ namespace InnoGotchiWebAPI.Controllers
     public class PetController : ControllerBase
     {
         private IPetService petService;
+        IWebHostEnvironment env;
 
-        public PetController(IPetService petService)
+        public PetController(IPetService petService, IWebHostEnvironment env)
         {
             this.petService = petService;
+            this.env = env;
         }
 
         [HttpGet]
-        public IQueryable<Pet> Get()
+        public async Task<IEnumerable<Pet>> Get()
         {
-            return petService.FindAll();
+            return await petService.FindAll();
         }
         [HttpGet("{id}")]
-        public IQueryable<Pet> GetById(int id)
+        public async Task<Pet> GetById(int id)
         {
-            return petService.FindByCondition(id);
+            return await petService.FindById(id);
         }
-        [HttpPost]
-        public void Post(Pet pet)
+        //[HttpGet("{name}")]
+        //public async Task<Pet> GetByName(string name)
+        //{
+        //    return await petService.FindByName(name);
+        //}
+        [HttpPost("/AddLookToPet")]
+        public async Task AddLookToPet(int id,[FromForm]AddLookToPetDTO look)
         {
-            petService.Create(pet);
+            await petService.AddLookToPet(id,look,env);
+        }
+        [HttpPost("/AddCharacteristicToPet")]
+        public async Task AddCharacteristicToPet(int id, AddCharacteristicToPetDTO addCharacteristicToPetDTO)
+        {
+            await petService.AddCharacteristicToPet(id, addCharacteristicToPetDTO);
         }
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            petService.Delete(id);
+            await petService.Delete(id);
         }
+        //[HttpDelete("{name}")]
+        //public async Task Delete(string name)
+        //{
+        //    await petService.DeleteByName(name);
+        //}
         [HttpPatch("{id}")]
-        public void Patch(int id)
+        public async Task  Patch(Pet pet)
         {
-
-            petService.Update(id);
+            await petService.Update(pet);
         }
     }
 }

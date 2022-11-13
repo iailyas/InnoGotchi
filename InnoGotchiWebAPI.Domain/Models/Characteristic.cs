@@ -12,8 +12,9 @@ namespace InnoGotchiWebAPI.Domain.Models
         [StringLength(255)]
         public string Thisty_level { get; set; }
         [JsonIgnore]
-        public int PetId { get; set; }
-        public Pet Pet { get; set; }
+        public Pet? Pet { get; set; }
+        public int? PetId { get; set; }
+        
 
     }
 }

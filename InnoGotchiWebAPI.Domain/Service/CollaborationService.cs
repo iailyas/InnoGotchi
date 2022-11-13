@@ -1,45 +1,47 @@
-﻿using InnoGotchiWebAPI.Domain.Interfaces;
+﻿
 using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Domain.Service.Interfaces;
+using InnoGotchiWebAPI.Infrastructure.RepositoryInterfaces;
 
 namespace InnoGotchiWebAPI.Domain.Service
 {
     public class CollaborationService : ICollaborationService
     {
-        IRepositoryWrapper repositoryWrapper;
+        private ICollaborationRepository collaborationRepository;
 
-        public CollaborationService(IRepositoryWrapper repositoryWrapper)
+        public CollaborationService(ICollaborationRepository collaborationRepository)
         {
-            this.repositoryWrapper = repositoryWrapper;
+            this.collaborationRepository = collaborationRepository;
         }
 
-        public IQueryable<Collaboration> FindAll()
+        public async Task Delete(int id)
         {
-            return repositoryWrapper.CollaborationRepository.FindAll();
+            await collaborationRepository.Delete(id);
         }
 
-        public IQueryable<Collaboration> FindByCondition(int id)
+        public async Task DeleteByName(string collaborationName)
         {
-            return repositoryWrapper.CollaborationRepository.FindByCondition(x => x.Id.Equals(id));
+            await collaborationRepository.DeleteByName(collaborationName);
         }
 
-        public void Create(Collaboration entity)
+        public async Task<IEnumerable<Collaboration>> FindAll()
         {
-            repositoryWrapper.CollaborationRepository.Create(entity);
+            return await collaborationRepository.FindAll();
         }
 
-        public void Update(int id)
+        public async Task<Collaboration> FindById(int id)
         {
-            Collaboration collaboration = (Collaboration)repositoryWrapper.CollaborationRepository.FindByCondition(x => x.Id.Equals(id));
-            repositoryWrapper.CollaborationRepository.Update(collaboration);
+            return await collaborationRepository.FindById(id);
         }
 
-        public void Delete(int id)
+        public async Task<Collaboration> FindByName(string collaborationName)
         {
-            Collaboration collaboration = (Collaboration)repositoryWrapper.CollaborationRepository.FindByCondition(x => x.Id.Equals(id));
-            repositoryWrapper.CollaborationRepository.Delete(collaboration);
+            return await collaborationRepository.FindByName(collaborationName);
         }
 
-
+        public async Task Update(Collaboration collaboration)
+        {
+            await collaborationRepository.Update(collaboration);
+        }
     }
 }

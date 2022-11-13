@@ -14,10 +14,11 @@ namespace InnoGotchiWebAPI.Domain.Models
         public float Average_thirst_quenching { get; set; }
         public float Average_pet_happiness { get; set; }
         public float Average_pets_age { get; set; }
-        public List<Pet> Pets { get; set; }
+        public List<Pet>? Pets { get; set; }
         [JsonIgnore]
-        public int UserId { get; set; }
-        public User User { get; set; }
+        public User? User { get; set; }
+        public int? UserId { get; set; }
+        
 
     }
 }

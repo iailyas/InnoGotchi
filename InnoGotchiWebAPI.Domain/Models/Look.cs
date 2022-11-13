@@ -5,12 +5,13 @@ namespace InnoGotchiWebAPI.Domain.Models
     public class Look
     {
         public int Id { get; set; }
-        public byte[]? Body { get; set; }
-        public byte[]? Eye { get; set; }
-        public byte[]? Nose { get; set; }
-        public byte[]? Mouth { get; set; }
+        public string? Body { get; set; }
+        public string? Eye { get; set; }
+        public string? Nose { get; set; }
+        public string? Mouth { get; set; }
         [JsonIgnore]
-        public int PetId { get; set; }
-        public Pet Pet { get; set; }
+        public Pet? Pet { get; set; }
+        public int? PetId { get; set; }
+        
     }
 }

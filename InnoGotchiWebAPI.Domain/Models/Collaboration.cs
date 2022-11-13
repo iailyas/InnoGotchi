@@ -13,8 +13,9 @@ namespace InnoGotchiWebAPI.Domain.Models
         [StringLength(255)]
         public string Route { get; set; }
         [JsonIgnore]
-        public int UserId { get; set; }
-        public List<User> User { get; set; }
+        public User? User { get; set; }
+        public int? UserId { get; set; }
+        
 
     }
 }

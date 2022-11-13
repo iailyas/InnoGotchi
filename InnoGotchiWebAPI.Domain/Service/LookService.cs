@@ -1,43 +1,47 @@
-﻿using InnoGotchiWebAPI.Domain.Interfaces;
+﻿
 using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Domain.Service.Interfaces;
+using InnoGotchiWebAPI.Infrastructure.RepositoryInterfaces;
 
 namespace InnoGotchiWebAPI.Domain.Service
 {
     public class LookService : ILookService
     {
-        IRepositoryWrapper repositoryWrapper;
+        ILookRepository lookRepository;
 
-        public LookService(IRepositoryWrapper repositoryWrapper)
+        public LookService(ILookRepository lookRepository)
         {
-            this.repositoryWrapper = repositoryWrapper;
+            this.lookRepository = lookRepository;
         }
 
-        public void Create(Look entity)
+        public async Task Delete(int id)
         {
-            repositoryWrapper.LookRepository.Create(entity);
+            await lookRepository.Delete(id);
         }
 
-        public void Delete(int id)
+        //public async Task DeleteByName(string lookName)
+        //{
+        //    await lookRepository.DeleteByName(lookName);
+        //}
+
+        public async Task<IEnumerable<Look>> FindAll()
         {
-            Look look = (Look)repositoryWrapper.LookRepository.FindByCondition(x => x.Id.Equals(id));
-            repositoryWrapper.LookRepository.Delete(look);
+            return await lookRepository.FindAll();
         }
 
-        public IQueryable<Look> FindAll()
+        public async Task<Look> FindById(int id)
         {
-            return repositoryWrapper.LookRepository.FindAll();
+            return await lookRepository.FindById(id);
         }
 
-        public IQueryable<Look> FindByCondition(int id)
-        {
-            return repositoryWrapper.LookRepository.FindByCondition(x => x.Id.Equals(id));
-        }
+        //public async Task<Look> FindByName(string lookName)
+        //{
+        //   return await lookRepository.FindByName(lookName);
+        //}
 
-        public void Update(int id)
+        public async Task Update(Look look)
         {
-            Look look = (Look)repositoryWrapper.LookRepository.FindByCondition(x => x.Id.Equals(id));
-            repositoryWrapper.LookRepository.Update(look);
+            await lookRepository.Update(look);
         }
     }
 }

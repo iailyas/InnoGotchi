@@ -18,7 +18,7 @@ namespace InnoGotchiWebAPI.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Collaboration>()
-                .HasMany(p => p.User)
+                .HasOne(p => p.User)
                 .WithMany(b => b.Collaborations);
 
 
@@ -59,7 +59,7 @@ namespace InnoGotchiWebAPI.Infrastructure
 
             modelBuilder.Entity<User>()
                .HasMany(p => p.Collaborations)
-               .WithMany(b => b.User);
+               .WithOne(b => b.User);
 
             modelBuilder.Entity<User>()
                .HasMany(p => p.Farms)

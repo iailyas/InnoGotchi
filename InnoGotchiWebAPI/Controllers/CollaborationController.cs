@@ -1,4 +1,5 @@
-﻿using InnoGotchiWebAPI.Domain.Models;
+﻿using InnoGotchiWebAPI.Domain.DTO;
+using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Domain.Service;
 using InnoGotchiWebAPI.Domain.Service.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -16,31 +17,36 @@ namespace InnoGotchiWebAPI.Controllers
         {
             this.collaborationService = collaborationService;
         }
+
         [HttpGet]
-        public IQueryable<Collaboration> Get()
+        public async Task<IEnumerable<Collaboration>> Get()
         {
-            return collaborationService.FindAll();
+            return await collaborationService.FindAll();
         }
         [HttpGet("{id}")]
-        public IQueryable<Collaboration> GetById(int id)
+        public async Task<Collaboration> GetById(int id)
         {
-            return collaborationService.FindByCondition(id);
+            return await collaborationService.FindById(id);
         }
-        [HttpPost]
-        public void Post(Collaboration collaboration)
-        {
-            collaborationService.Create(collaboration);
-        }
+        //[HttpGet("{name}")]
+        //public async Task<Collaboration> GetByName(string name)
+        //{
+        //    return await collaborationService.FindByName(name);
+        //}
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            collaborationService.Delete(id);
+            await collaborationService.Delete(id);
         }
+        //[HttpDelete("{name}")]
+        //public async Task Delete(string name)
+        //{
+        //    await collaborationService.DeleteByName(name);
+        //}
         [HttpPatch("{id}")]
-        public void Patch(int id)
+        public async Task Patch(Collaboration collaboration)
         {
-
-            collaborationService.Update(id);
+            await collaborationService.Update(collaboration);
         }
     }
 }

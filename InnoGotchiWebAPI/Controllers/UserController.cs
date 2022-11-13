@@ -1,4 +1,5 @@
-using InnoGotchiWebAPI.Domain.Interfaces;
+using AutoMapper;
+using InnoGotchiWebAPI.Domain.DTO;
 using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Domain.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -10,37 +11,62 @@ namespace InnoGotchiWebAPI.Controllers
     public class UserController : ControllerBase
     {
         private IUserService userService;
+        private IWebHostEnvironment webHostEnvironment;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IWebHostEnvironment webHostEnvironment)
         {
             this.userService = userService;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet(Name = "Get")]
-        public IQueryable<User> Get()
+        public async Task<IEnumerable<User>> Get()
         {
-            return userService.FindAll();
+            return await userService.FindAll();
         }
         [HttpGet("{id}")]
-        public IQueryable<User> GetById(int id)
+        public async Task<User> GetById(int id)
         {
-            return userService.FindByCondition(id);
+            return await userService.FindById(id);
         }
+        //[HttpGet("{name}")]
+        //public async Task<User> GetByName(string name)
+        //{
+        //    return await userService.FindByName(name);
+        //}
         [HttpPost(Name = "Post")]
-        public void Post(User user)
+        public async Task Post([FromForm] UserDTO user)
         {
-            userService.Create(user);
+            await userService.Create(user, webHostEnvironment);
         }
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            userService.Delete(id);
+            await userService.Delete(id);
         }
+        //[HttpDelete("{name}")]
+        //public async Task Delete(string name)
+        //{
+        //    await userService.DeleteByName(name);
+        //}
         [HttpPatch("{id}")]
-        public void Patch(int id)
+        public async Task Patch(User user)
         {
 
-            userService.Update(id);
+            await userService.Update(user);
         }
+
+        [HttpPost("/AddCollaborationToUser")]
+        public async Task AddCollabprationToUser(int id, AddCollaborationToUserDTO collaborationDTO)
+        {
+            await userService.AddCollaborationToUser(id, collaborationDTO);
+        }
+        [HttpPost("/AddFarmToUser")]
+        public async Task AddFarmToUser(int id, AddFarmToUserDTO addFarmToUserDTO)
+        {
+            await userService.AddFarmToUser(id, addFarmToUserDTO);
+        }
+       
+       
     }
 }

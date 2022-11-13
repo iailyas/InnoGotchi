@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -11,22 +10,6 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Collaboration",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    Keyword = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    Route = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Collaboration", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -36,7 +19,7 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                     Last_Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     Role = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     Email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    Avatar = table.Column<byte[]>(type: "bytea", nullable: true)
+                    Avatar = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -44,27 +27,24 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CollaborationUser",
+                name: "Collaboration",
                 columns: table => new
                 {
-                    CollaborationsId = table.Column<int>(type: "integer", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    Keyword = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    Route = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CollaborationUser", x => new { x.CollaborationsId, x.UserId });
+                    table.PrimaryKey("PK_Collaboration", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CollaborationUser_Collaboration_CollaborationsId",
-                        column: x => x.CollaborationsId,
-                        principalTable: "Collaboration",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CollaborationUser_User_UserId",
+                        name: "FK_Collaboration_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -80,7 +60,7 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                     Average_thirst_quenching = table.Column<float>(type: "real", nullable: false),
                     Average_pet_happiness = table.Column<float>(type: "real", nullable: false),
                     Average_pets_age = table.Column<float>(type: "real", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: false)
+                    UserId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -104,7 +84,7 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                     Happiness_days_count = table.Column<int>(type: "integer", nullable: false),
                     Feeding_period = table.Column<int>(type: "integer", nullable: false),
                     Thist_quenching = table.Column<int>(type: "integer", nullable: false),
-                    FarmId = table.Column<int>(type: "integer", nullable: false)
+                    FarmId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -126,7 +106,7 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                     Age = table.Column<int>(type: "integer", nullable: false),
                     Hunger_level = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     Thisty_level = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    PetId = table.Column<int>(type: "integer", nullable: false)
+                    PetId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -145,11 +125,11 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Body = table.Column<byte[]>(type: "bytea", nullable: true),
-                    Eye = table.Column<byte[]>(type: "bytea", nullable: true),
-                    Nose = table.Column<byte[]>(type: "bytea", nullable: true),
-                    Mouth = table.Column<byte[]>(type: "bytea", nullable: true),
-                    PetId = table.Column<int>(type: "integer", nullable: false)
+                    Body = table.Column<string>(type: "text", nullable: true),
+                    Eye = table.Column<string>(type: "text", nullable: true),
+                    Nose = table.Column<string>(type: "text", nullable: true),
+                    Mouth = table.Column<string>(type: "text", nullable: true),
+                    PetId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -168,8 +148,8 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                 column: "PetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CollaborationUser_UserId",
-                table: "CollaborationUser",
+                name: "IX_Collaboration_UserId",
+                table: "Collaboration",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -194,13 +174,10 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                 name: "Characteristic");
 
             migrationBuilder.DropTable(
-                name: "CollaborationUser");
+                name: "Collaboration");
 
             migrationBuilder.DropTable(
                 name: "Look");
-
-            migrationBuilder.DropTable(
-                name: "Collaboration");
 
             migrationBuilder.DropTable(
                 name: "Pet");

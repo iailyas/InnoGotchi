@@ -1,43 +1,36 @@
-﻿using InnoGotchiWebAPI.Domain.Interfaces;
+﻿
 using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Domain.Service.Interfaces;
+using InnoGotchiWebAPI.Infrastructure.RepositoryInterfaces;
 
 namespace InnoGotchiWebAPI.Domain.Service
 {
     public class CharacteristicService : ICharacteristicService
     {
-        IRepositoryWrapper repositoryWrapper;
+        private ICharacteristicRepository characteristicRepository;
 
-        public CharacteristicService(IRepositoryWrapper repositoryWrapper)
+        public CharacteristicService(ICharacteristicRepository characteristicRepository)
         {
-            this.repositoryWrapper = repositoryWrapper;
+            this.characteristicRepository = characteristicRepository;
         }
 
-        public void Create(Characteristic entity)
+        public async Task Delete(int id)
         {
-            repositoryWrapper.CharacteristicRepository.Create(entity);
+            await characteristicRepository.Delete(id);
+        }
+        public async Task<IEnumerable<Characteristic>> FindAll()
+        {
+           return await characteristicRepository.FindAll();
         }
 
-        public void Delete(int id)
+        public async Task<Characteristic> FindById(int id)
         {
-            Characteristic characteristic = (Characteristic)repositoryWrapper.CharacteristicRepository.FindByCondition(x => x.Id.Equals(id));
-            repositoryWrapper.CharacteristicRepository.Delete(characteristic);
-        }
+            return await characteristicRepository.FindById(id);
+        }       
 
-        public IQueryable<Characteristic> FindAll()
+        public async Task Update(Characteristic characteristic)
         {
-            return repositoryWrapper.CharacteristicRepository.FindAll();
-        }
-
-        public IQueryable<Characteristic> FindByCondition(int id)
-        {
-            return repositoryWrapper.CharacteristicRepository.FindByCondition(x => x.Id.Equals(id));
-        }
-
-        public void Update(int id)
-        {
-            Characteristic characteristic = (Characteristic)repositoryWrapper.CharacteristicRepository.FindByCondition(x => x.Id.Equals(id));
-            repositoryWrapper.CharacteristicRepository.Update(characteristic);
+            await characteristicRepository.Update(characteristic);
         }
     }
 }

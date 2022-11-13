@@ -22,21 +22,6 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("CollaborationUser", b =>
-                {
-                    b.Property<int>("CollaborationsId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("CollaborationsId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("CollaborationUser");
-                });
-
             modelBuilder.Entity("InnoGotchiWebAPI.Domain.Models.Characteristic", b =>
                 {
                     b.Property<int>("Id")
@@ -53,7 +38,7 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<int>("PetId")
+                    b.Property<int?>("PetId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Thisty_level")
@@ -91,10 +76,12 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Collaboration");
                 });
@@ -130,7 +117,7 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -148,19 +135,19 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<byte[]>("Body")
-                        .HasColumnType("bytea");
+                    b.Property<string>("Body")
+                        .HasColumnType("text");
 
-                    b.Property<byte[]>("Eye")
-                        .HasColumnType("bytea");
+                    b.Property<string>("Eye")
+                        .HasColumnType("text");
 
-                    b.Property<byte[]>("Mouth")
-                        .HasColumnType("bytea");
+                    b.Property<string>("Mouth")
+                        .HasColumnType("text");
 
-                    b.Property<byte[]>("Nose")
-                        .HasColumnType("bytea");
+                    b.Property<string>("Nose")
+                        .HasColumnType("text");
 
-                    b.Property<int>("PetId")
+                    b.Property<int?>("PetId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -178,7 +165,7 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("FarmId")
+                    b.Property<int?>("FarmId")
                         .HasColumnType("integer");
 
                     b.Property<int>("Feeding_period")
@@ -215,8 +202,8 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<byte[]>("Avatar")
-                        .HasColumnType("bytea");
+                    b.Property<string>("Avatar")
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -243,30 +230,23 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("CollaborationUser", b =>
-                {
-                    b.HasOne("InnoGotchiWebAPI.Domain.Models.Collaboration", null)
-                        .WithMany()
-                        .HasForeignKey("CollaborationsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("InnoGotchiWebAPI.Domain.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("InnoGotchiWebAPI.Domain.Models.Characteristic", b =>
                 {
                     b.HasOne("InnoGotchiWebAPI.Domain.Models.Pet", "Pet")
                         .WithMany("Characteristics")
                         .HasForeignKey("PetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Pet");
+                });
+
+            modelBuilder.Entity("InnoGotchiWebAPI.Domain.Models.Collaboration", b =>
+                {
+                    b.HasOne("InnoGotchiWebAPI.Domain.Models.User", "User")
+                        .WithMany("Collaborations")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("InnoGotchiWebAPI.Domain.Models.Farm", b =>
@@ -274,8 +254,7 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                     b.HasOne("InnoGotchiWebAPI.Domain.Models.User", "User")
                         .WithMany("Farms")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("User");
                 });
@@ -285,8 +264,7 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                     b.HasOne("InnoGotchiWebAPI.Domain.Models.Pet", "Pet")
                         .WithMany("Looks")
                         .HasForeignKey("PetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Pet");
                 });
@@ -296,8 +274,7 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                     b.HasOne("InnoGotchiWebAPI.Domain.Models.Farm", "Farm")
                         .WithMany("Pets")
                         .HasForeignKey("FarmId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Farm");
                 });
@@ -316,6 +293,8 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
 
             modelBuilder.Entity("InnoGotchiWebAPI.Domain.Models.User", b =>
                 {
+                    b.Navigation("Collaborations");
+
                     b.Navigation("Farms");
                 });
 #pragma warning restore 612, 618

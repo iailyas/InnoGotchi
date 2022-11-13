@@ -1,43 +1,61 @@
-﻿using InnoGotchiWebAPI.Domain.Interfaces;
+﻿
+using InnoGotchiWebAPI.Domain.DTO;
 using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Domain.Service.Interfaces;
+using InnoGotchiWebAPI.Infrastructure.RepositoryInterfaces;
+using Microsoft.AspNetCore.Hosting;
 
 namespace InnoGotchiWebAPI.Domain.Service
 {
     public class PetService : IPetService
     {
-        private IRepositoryWrapper repositoryWrapper;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private IPetRepository petRepository;
 
-        public PetService(IRepositoryWrapper repositoryWrapper)
+        public PetService(IWebHostEnvironment webHostEnvironment, IPetRepository petRepository)
         {
-            this.repositoryWrapper = repositoryWrapper;
+            _webHostEnvironment = webHostEnvironment;
+            this.petRepository = petRepository;
         }
 
-        public void Create(Pet entity)
+        public async Task AddCharacteristicToPet(int id, AddCharacteristicToPetDTO addCharacteristicToPetDTO)
         {
-            repositoryWrapper.PetRepository.Create(entity);
+           await petRepository.AddCharacteristicToPet(id, addCharacteristicToPetDTO);
         }
 
-        public void Delete(int id)
+        public async Task AddLookToPet(int id, AddLookToPetDTO lookToPetDTO, IWebHostEnvironment webHostEnvironment)
         {
-            Pet pet = (Pet)repositoryWrapper.PetRepository.FindByCondition(x => x.Id.Equals(id));
-            repositoryWrapper.PetRepository.Delete(pet);
+            await petRepository.AddLookToPet(id, lookToPetDTO, webHostEnvironment);
         }
 
-        public IQueryable<Pet> FindAll()
+        public async Task Delete(int id)
         {
-            return repositoryWrapper.PetRepository.FindAll();
+            await petRepository.Delete(id);
         }
 
-        public IQueryable<Pet> FindByCondition(int id)
+        public async Task DeleteByName(string userName)
         {
-            return repositoryWrapper.PetRepository.FindByCondition(x => x.Id.Equals(id));
+            await petRepository.DeleteByName(userName);
         }
 
-        public void Update(int id)
+        public async Task<IEnumerable<Pet>> FindAll()
         {
-            Pet pet = (Pet)repositoryWrapper.PetRepository.FindByCondition(x => x.Id.Equals(id));
-            repositoryWrapper.PetRepository.Update(pet);
+            return await petRepository.FindAll();
+        }
+
+        public async Task<Pet> FindById(int id)
+        {
+            return await petRepository.FindById(id);
+        }
+
+        public async Task<Pet> FindByName(string petName)
+        {
+            return await petRepository.FindByName(petName);
+        }
+
+        public async Task Update(Pet pet)
+        {
+            await petRepository.Update(pet);
         }
     }
 }

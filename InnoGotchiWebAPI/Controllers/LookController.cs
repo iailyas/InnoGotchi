@@ -1,4 +1,5 @@
-﻿using InnoGotchiWebAPI.Domain.Models;
+﻿using InnoGotchiWebAPI.Domain.DTO;
+using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Domain.Service;
 using InnoGotchiWebAPI.Domain.Service.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -11,36 +12,30 @@ namespace InnoGotchiWebAPI.Controllers
     public class LookController : ControllerBase
     {
         ILookService lookService;
-
         public LookController(ILookService lookService)
         {
             this.lookService = lookService;
         }
         [HttpGet]
-        public IQueryable<Look> Get()
+        public async Task<IEnumerable<Look>> Get()
         {
-            return lookService.FindAll();
+            return await lookService.FindAll();
         }
         [HttpGet("{id}")]
-        public IQueryable<Look> GetById(int id)
+        public async Task<Look> GetById(int id)
         {
-            return lookService.FindByCondition(id);
+            return await lookService.FindById(id);
         }
-        [HttpPost]
-        public void Post(Look look)
-        {
-            lookService.Create(look);
-        }
+        
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            lookService.Delete(id);
+            await lookService.Delete(id);
         }
         [HttpPatch("{id}")]
-        public void Patch(int id)
+        public async Task Patch([FromForm] Look look)
         {
-
-            lookService.Update(id);
+            await lookService.Update(look);
         }
     }
 }

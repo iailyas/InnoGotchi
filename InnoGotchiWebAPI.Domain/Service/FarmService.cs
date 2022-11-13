@@ -1,43 +1,53 @@
-﻿using InnoGotchiWebAPI.Domain.Interfaces;
+﻿
+using InnoGotchiWebAPI.Domain.DTO;
 using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Domain.Service.Interfaces;
+using InnoGotchiWebAPI.Infrastructure.RepositoryInterfaces;
 
 namespace InnoGotchiWebAPI.Domain.Service
 {
     public class FarmService : IFarmService
     {
-        IRepositoryWrapper repositoryWrapper;
+        private IFarmRepository farmRepository;
 
-        public FarmService(IRepositoryWrapper repositoryWrapper)
+        public FarmService(IFarmRepository farmRepository)
         {
-            this.repositoryWrapper = repositoryWrapper;
+            this.farmRepository = farmRepository;
         }
 
-        public void Create(Farm farm)
+        public async Task AddPetToFarm(int id, AddPetToFarmDTO addPetToFarmDTO)
         {
-           repositoryWrapper.FarmRepository.Create(farm);
+            await farmRepository.AddPetToFarm(id, addPetToFarmDTO);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            Farm farm = (Farm)repositoryWrapper.FarmRepository.FindByCondition(x => x.Id.Equals(id));
-            repositoryWrapper.FarmRepository.Delete(farm);
+            await farmRepository.Delete(id);
         }
 
-        public IQueryable<Farm> FindAll()
+        public async Task DeleteByName(string farmName)
         {
-            return repositoryWrapper.FarmRepository.FindAll();
+            await farmRepository.DeleteByName(farmName);
         }
 
-        public IQueryable<Farm> FindByCondition(int id)
+        public async Task<IEnumerable<Farm>> FindAll()
         {
-            return repositoryWrapper.FarmRepository.FindByCondition(x => x.Id.Equals(id));
+            return await farmRepository.FindAll();
         }
 
-        public void Update(int id)
+        public async Task<Farm> FindById(int id)
         {
-            Farm farm = (Farm)repositoryWrapper.FarmRepository.FindByCondition(x => x.Id.Equals(id));
-            repositoryWrapper.FarmRepository.Update(farm);
+            return await farmRepository.FindById(id);
+        }
+
+        public async Task<Farm> FindByName(string lastName)
+        {
+            return await farmRepository.FindByName(lastName);
+        }
+
+        public async Task Update(Farm farm)
+        {
+            await farmRepository.Update(farm);
         }
     }
 }

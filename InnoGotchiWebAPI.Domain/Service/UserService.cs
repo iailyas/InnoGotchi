@@ -1,49 +1,64 @@
 ﻿using InnoGotchiWebAPI.Domain.DTO;
-using InnoGotchiWebAPI.Domain.Interfaces;
 using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Domain.Service.Interfaces;
+using InnoGotchiWebAPI.Infrastructure.RepositoryInterfaces;
+using Microsoft.AspNetCore.Hosting;
 
 namespace InnoGotchiWebAPI.Domain.Service
 {
     public class UserService : IUserService
     {
-        private IRepositoryWrapper repositoryWrapper;
+        private IUserRepository repository;
 
-        public UserService(IRepositoryWrapper repositoryWrapper)
+
+        public UserService(IUserRepository repository)
         {
-            this.repositoryWrapper = repositoryWrapper;
+            this.repository = repository;
         }
 
-        public void Create(UserDTO user)
+        public async Task AddCollaborationToUser(int id, AddCollaborationToUserDTO collaborationDTO)
         {
-            repositoryWrapper.UserRepository.Create(user);
+            await repository.AddCollaborationToUser(id,collaborationDTO);
         }
 
-        public void Create(User entity)
+        public async Task AddFarmToUser(int id, AddFarmToUserDTO addFarmToUserDTO)
         {
-            repositoryWrapper.UserRepository.Create(entity);
+            await repository.AddFarmToUser(id,addFarmToUserDTO);
         }
 
-        public void Delete(int id)
+        public async Task<string> Create(UserDTO entity, IWebHostEnvironment webHostEnvironment)
         {
-            User user = (User)repositoryWrapper.UserRepository.FindByCondition(x => x.Id.Equals(id));
-            repositoryWrapper.UserRepository.Delete(user);
+            return await repository.Create(entity,webHostEnvironment);
         }
 
-        public IQueryable<User> FindAll()
+        public async Task Delete(int id)
         {
-            return repositoryWrapper.UserRepository.FindAll();
+            await repository.Delete(id);
         }
 
-        public IQueryable<User> FindByCondition(int id)
+        public async  Task DeleteByName(string userName)
         {
-            return repositoryWrapper.UserRepository.FindByCondition(x => x.Id.Equals(id));
+            await repository.DeleteByName(userName);
         }
 
-        public void Update(int id)
+        public async Task<IEnumerable<User>> FindAll()
         {
-            User user = (User)repositoryWrapper.UserRepository.FindByCondition(x => x.Id.Equals(id));
-            repositoryWrapper.UserRepository.Update(user);
+            return await repository.FindAll();
+        }
+
+        public async Task<User> FindById(int id)
+        {
+            return await repository.FindById(id);
+        }
+
+        public async Task<User> FindByName(string lastName)
+        {
+            return await repository.FindByName(lastName);
+        }
+
+        public async Task Update(User user)
+        {
+            await repository.Update(user);
         }
     }
 }
