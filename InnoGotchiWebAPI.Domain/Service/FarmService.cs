@@ -49,5 +49,11 @@ namespace InnoGotchiWebAPI.Domain.Service
         {
             await farmRepository.Update(farm);
         }
+
+        public async Task<Farm> UpdateFarmProp(int id, Farm updatedFarm)
+        {
+            return await farmRepository.UpdateFarmProp(id, updatedFarm);
+            
+        }
     }
 }

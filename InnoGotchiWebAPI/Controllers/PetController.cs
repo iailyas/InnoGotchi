@@ -6,7 +6,7 @@ using System.Xml.Linq;
 
 namespace InnoGotchiWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class PetController : ControllerBase
     {

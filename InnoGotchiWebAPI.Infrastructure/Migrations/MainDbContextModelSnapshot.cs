@@ -94,22 +94,22 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Alive_pets_count")
+                    b.Property<int?>("Alive_pets_count")
                         .HasColumnType("integer");
 
-                    b.Property<float>("Average_feeding_period")
+                    b.Property<float?>("Average_feeding_period")
                         .HasColumnType("real");
 
-                    b.Property<float>("Average_pet_happiness")
+                    b.Property<float?>("Average_pet_happiness")
                         .HasColumnType("real");
 
-                    b.Property<float>("Average_pets_age")
+                    b.Property<float?>("Average_pets_age")
                         .HasColumnType("real");
 
-                    b.Property<float>("Average_thirst_quenching")
+                    b.Property<float?>("Average_thirst_quenching")
                         .HasColumnType("real");
 
-                    b.Property<int>("Dead_pets_count")
+                    b.Property<int?>("Dead_pets_count")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")

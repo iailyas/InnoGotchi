@@ -56,6 +56,7 @@ namespace InnoGotchiWebAPI.Controllers
             await userService.Update(user);
         }
 
+
         [HttpPost("/AddCollaborationToUser")]
         public async Task AddCollabprationToUser(int id, AddCollaborationToUserDTO collaborationDTO)
         {

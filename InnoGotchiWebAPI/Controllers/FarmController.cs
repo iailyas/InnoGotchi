@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InnoGotchiWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class FarmController : ControllerBase
     {
@@ -50,6 +50,11 @@ namespace InnoGotchiWebAPI.Controllers
         public async Task Patch(Farm farm)
         {
             await farmService.Update(farm);
+        }
+        [HttpPut]
+        public async Task<Farm> Update(int id,Farm farm)
+        {
+            return await farmService.UpdateFarmProp(id,farm);
         }
     }
 }

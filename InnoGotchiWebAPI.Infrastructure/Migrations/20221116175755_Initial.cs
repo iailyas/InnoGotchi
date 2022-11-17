@@ -54,12 +54,12 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    Dead_pets_count = table.Column<int>(type: "integer", nullable: false),
-                    Alive_pets_count = table.Column<int>(type: "integer", nullable: false),
-                    Average_feeding_period = table.Column<float>(type: "real", nullable: false),
-                    Average_thirst_quenching = table.Column<float>(type: "real", nullable: false),
-                    Average_pet_happiness = table.Column<float>(type: "real", nullable: false),
-                    Average_pets_age = table.Column<float>(type: "real", nullable: false),
+                    Dead_pets_count = table.Column<int>(type: "integer", nullable: true),
+                    Alive_pets_count = table.Column<int>(type: "integer", nullable: true),
+                    Average_feeding_period = table.Column<float>(type: "real", nullable: true),
+                    Average_thirst_quenching = table.Column<float>(type: "real", nullable: true),
+                    Average_pet_happiness = table.Column<float>(type: "real", nullable: true),
+                    Average_pets_age = table.Column<float>(type: "real", nullable: true),
                     UserId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>

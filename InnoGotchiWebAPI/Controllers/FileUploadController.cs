@@ -6,7 +6,7 @@ using System.Drawing;
 namespace InnoGotchiWebAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class FileUploadController:ControllerBase
     {
         private IWebHostEnvironment webHostEnvironment;

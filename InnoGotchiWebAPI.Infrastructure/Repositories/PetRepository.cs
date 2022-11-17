@@ -86,7 +86,7 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
 
         public async Task Delete(int id)
         {
-            var pet = FindById(id);
+            var pet = await FindById(id);
             context.Remove(pet);
             await context.SaveChangesAsync();
         }

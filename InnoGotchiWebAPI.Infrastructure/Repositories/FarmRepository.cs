@@ -36,7 +36,7 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
 
         public async Task Delete(int id)
         {
-            var farm = FindById(id);
+            var farm = await FindById(id);
             context.Remove(farm);
             await context.SaveChangesAsync();
         }
@@ -55,14 +55,20 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
 
         public async Task<Farm> FindById(int id)
         {
-            return await context.Farm.AsNoTracking().SingleAsync(b => b.Id == id);
+            return await context.Farm.SingleAsync(b => b.Id == id);
         }
 
         public async Task<Farm> FindByName(string name)
         {
             return await context.Farm.AsNoTracking().SingleAsync(a => a.Name == name);
         }
-
+        public async Task<Farm> UpdateFarmProp(int id, Farm updatedFarm)
+        {
+            var curentFarm = await FindById(id);
+            curentFarm.Name = updatedFarm.Name;
+            await context.SaveChangesAsync();
+            return curentFarm;
+        }
         public async Task Update(Farm farm)
         {
             context.Update(farm);

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InnoGotchiWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class CharacteristicController : ControllerBase
     {
