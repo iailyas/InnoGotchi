@@ -4,14 +4,14 @@
     "F:\\prog\\myrepository\\LabProjectInnowise\\InnoGotchiWebAPI\\InnoGotchiWebAPI.Infrastructure\\InnoGotchiWebAPI.Infrastructure.csproj": {}
   },
   "projects": {
-    "F:\\prog\\myrepository\\LabProjectInnowise\\InnoGotchiWebAPI\\InnoGotchiWebAPI.Domain\\InnoGotchiWebAPI.Domain.csproj": {
+    "F:\\prog\\myrepository\\LabProjectInnowise\\InnoGotchiWebAPI\\InnoGotchiWebAPI.Infrastructure\\InnoGotchiWebAPI.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\prog\\myrepository\\LabProjectInnowise\\InnoGotchiWebAPI\\InnoGotchiWebAPI.Domain\\InnoGotchiWebAPI.Domain.csproj",
-        "projectName": "InnoGotchiWebAPI.Domain",
-        "projectPath": "F:\\prog\\myrepository\\LabProjectInnowise\\InnoGotchiWebAPI\\InnoGotchiWebAPI.Domain\\InnoGotchiWebAPI.Domain.csproj",
+        "projectUniqueName": "F:\\prog\\myrepository\\LabProjectInnowise\\InnoGotchiWebAPI\\InnoGotchiWebAPI.Infrastructure\\InnoGotchiWebAPI.Infrastructure.csproj",
+        "projectName": "InnoGotchiWebAPI.Infrastructure",
+        "projectPath": "F:\\prog\\myrepository\\LabProjectInnowise\\InnoGotchiWebAPI\\InnoGotchiWebAPI.Infrastructure\\InnoGotchiWebAPI.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\ILYAS\\.nuget\\packages\\",
-        "outputPath": "F:\\prog\\myrepository\\LabProjectInnowise\\InnoGotchiWebAPI\\InnoGotchiWebAPI.Domain\\obj\\",
+        "outputPath": "F:\\prog\\myrepository\\LabProjectInnowise\\InnoGotchiWebAPI\\InnoGotchiWebAPI.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "F:\\VS\\sdk\\NuGetPackages"
@@ -44,12 +44,6 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "dependencies": {
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[6.0.10, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -66,71 +60,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "F:\\prog\\myrepository\\LabProjectInnowise\\InnoGotchiWebAPI\\InnoGotchiWebAPI.Infrastructure\\InnoGotchiWebAPI.Infrastructure.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "F:\\prog\\myrepository\\LabProjectInnowise\\InnoGotchiWebAPI\\InnoGotchiWebAPI.Infrastructure\\InnoGotchiWebAPI.Infrastructure.csproj",
-        "projectName": "InnoGotchiWebAPI.Infrastructure",
-        "projectPath": "F:\\prog\\myrepository\\LabProjectInnowise\\InnoGotchiWebAPI\\InnoGotchiWebAPI.Infrastructure\\InnoGotchiWebAPI.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\ILYAS\\.nuget\\packages\\",
-        "outputPath": "F:\\prog\\myrepository\\LabProjectInnowise\\InnoGotchiWebAPI\\InnoGotchiWebAPI.Infrastructure\\obj\\",
-        "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "F:\\VS\\sdk\\NuGetPackages"
-        ],
-        "configFilePaths": [
-          "C:\\Users\\ILYAS\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net6.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
-            "projectReferences": {
-              "F:\\prog\\myrepository\\LabProjectInnowise\\InnoGotchiWebAPI\\InnoGotchiWebAPI.Domain\\InnoGotchiWebAPI.Domain.csproj": {
-                "projectPath": "F:\\prog\\myrepository\\LabProjectInnowise\\InnoGotchiWebAPI\\InnoGotchiWebAPI.Domain\\InnoGotchiWebAPI.Domain.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48",
-            "net481"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
