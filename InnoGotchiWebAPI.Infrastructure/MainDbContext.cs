@@ -1,20 +1,23 @@
 ﻿using InnoGotchiWebAPI.Domain.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace InnoGotchiWebAPI.Infrastructure
 {
-    public class MainDbContext : DbContext
+    public class MainDbContext : IdentityDbContext<IdentityUser>
     {
         public MainDbContext(DbContextOptions<MainDbContext> options)
              : base(options)
         {
         }
-        public DbSet<Collaboration> Collaboration {get; set;}
+        public DbSet<Collaboration> Collaboration { get; set; }
         public DbSet<Look> Look { get; set; }
         public DbSet<Characteristic> Characteristic { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Farm> Farm { get; set; }
         public DbSet<Pet> Pet { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Collaboration>()
@@ -65,6 +68,8 @@ namespace InnoGotchiWebAPI.Infrastructure
                .HasMany(p => p.Farms)
                .WithOne(b => b.User)
                .OnDelete(DeleteBehavior.Cascade);
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
