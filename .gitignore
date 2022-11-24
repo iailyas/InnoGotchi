@@ -5,3 +5,10 @@
 *.vs 
 *.bin 
 *.obj
+*.rej
+*.cs
+*.cache
+*.editorconfig
+*.json
+*.props
+*.targets
