@@ -7,3 +7,6 @@
 *.obj
 *.jpg
 *.cache
+*.csproj
+*.rej
+*.json

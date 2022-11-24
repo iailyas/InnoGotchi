@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "a99Hxu1oEn7DnxMj/aqlVO9+XNEhaVXF+OPLv6t895d7vNRoOG4tc58oqqPcXoc+6AevVA2yxUEHeGzD/QYHSA==",
+  "dgSpecHash": "Bm6QfPJMC985Jp2n+p9K9x8H2IbGBv1V/rPcOImacBmTeGbtlc3fvbzRdSjaXA/zJ+ic9CRrBQSn35DgMCmxHw==",
   "success": true,
   "projectFilePath": "F:\\prog\\myrepository\\LabProjectInnowise\\InnoGotchiWebAPI\\InnoGotchiWebAPI.Infrastructure\\InnoGotchiWebAPI.Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -206,6 +206,12 @@
     "C:\\Users\\ILYAS\\.nuget\\packages\\xunit.runner.visualstudio\\2.4.5\\xunit.runner.visualstudio.2.4.5.nupkg.sha512"
   ],
   "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Ошибка чтения файла кэша F:\\prog\\myrepository\\LabProjectInnowise\\InnoGotchiWebAPI\\InnoGotchiWebAPI.Infrastructure\\obj\\project.nuget.cache: Invalid property identifier character: <. Path 'version', line 3, position 0."
+    },
     {
       "code": "NU1701",
       "level": "Warning",
