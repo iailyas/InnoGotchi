@@ -1,20 +1,28 @@
+using AutoMapper;
 using InnoGotchiWebAPI.Domain.Service;
 using InnoGotchiWebAPI.Domain.Service.Interfaces;
 using InnoGotchiWebAPI.Infrastructure;
 using InnoGotchiWebAPI.Infrastructure.Repositories;
 using InnoGotchiWebAPI.Infrastructure.RepositoryInterfaces;
+using InnoGotchiWebAPI.Mapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
-//var mapperConfig = new MapperConfiguration(mc =>
-//{
-//    mc.AddProfile(new UserMapProfile());
-//});
+var mapperConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new UserProfile());
+    mc.AddProfile(new PetProfile());
+    mc.AddProfile(new LookProfile());
+    mc.AddProfile(new FarmProfile());
+    mc.AddProfile(new CollaborationProfile());
+    mc.AddProfile(new CharacteristicProfile());
+});
 
-//IMapper mapper = mapperConfig.CreateMapper();
+IMapper mapper = mapperConfig.CreateMapper();
+
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
 
@@ -23,7 +31,7 @@ builder.Services.AddDbContext<MainDbContext>(options => options.UseNpgsql(builde
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<MainDbContext>()
     .AddDefaultTokenProviders();
-
+builder.Services.AddSingleton(mapper);
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPetRepository, PetRepository>();
 builder.Services.AddScoped<ILookRepository, LookRepository>();

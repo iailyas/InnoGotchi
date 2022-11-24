@@ -1,8 +1,5 @@
-﻿using InnoGotchiWebAPI.Domain.DTO;
-using InnoGotchiWebAPI.Domain.Models;
-using InnoGotchiWebAPI.Domain.Service;
-using InnoGotchiWebAPI.Domain.Service.Interfaces;
-using Microsoft.AspNetCore.Http;
+﻿using InnoGotchiWebAPI.Domain.Service.Interfaces;
+using InnoGotchiWebAPI.Mapper.Commands;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InnoGotchiWebAPI.Controllers
@@ -17,23 +14,23 @@ namespace InnoGotchiWebAPI.Controllers
             this.characteristicService = characteristicService;
         }
         [HttpGet]
-        public async Task<IEnumerable<Characteristic>> Get()
+        public async Task<IEnumerable<CharacteristicCommand>> Get()
         {
             return await characteristicService.FindAll();
         }
         [HttpGet("{id}")]
-        public async Task<Characteristic> GetById(int id)
+        public async Task<CharacteristicCommand> GetById(int id)
         {
             return await characteristicService.FindById(id);
         }
-        
+
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
             await characteristicService.Delete(id);
         }
         [HttpPatch("{id}")]
-        public async Task Patch(Characteristic characteristic)
+        public async Task Patch(CharacteristicCommand characteristic)
         {
             await characteristicService.Update(characteristic);
         }

@@ -1,5 +1,6 @@
 ﻿using InnoGotchiWebAPI.Domain.DTO;
 using InnoGotchiWebAPI.Domain.Models;
+using InnoGotchiWebAPI.Mapper.Commands;
 using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,12 @@ namespace InnoGotchiWebAPI.Domain.Service.Interfaces
 {
     public interface IPetService
     {
-        Task<IEnumerable<Pet>> FindAll();
-        Task<Pet> FindById(int id);
-        Task<Pet> FindByName(string petName);
+        Task<IEnumerable<PetCommand>> FindAll();
+        Task<PetCommand> FindById(int id);
+        Task<PetCommand> FindByName(string petName);
         Task AddLookToPet(int id, AddLookToPetDTO lookToPetDTO, IWebHostEnvironment webHostEnvironment);
         Task AddCharacteristicToPet(int id, AddCharacteristicToPetDTO addCharacteristicToPetDTO);
-        Task Update(Pet pet);
+        Task Update(PetCommand pet);
         Task Delete(int id);
         Task DeleteByName(string userName);
     }

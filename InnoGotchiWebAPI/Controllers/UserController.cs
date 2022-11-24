@@ -1,7 +1,6 @@
-using AutoMapper;
 using InnoGotchiWebAPI.Domain.DTO;
-using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Domain.Service.Interfaces;
+using InnoGotchiWebAPI.Mapper.Commands;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InnoGotchiWebAPI.Controllers
@@ -20,12 +19,12 @@ namespace InnoGotchiWebAPI.Controllers
         }
 
         [HttpGet(Name = "Get")]
-        public async Task<IEnumerable<User>> Get()
+        public async Task<IEnumerable<UserCommand>> Get()
         {
             return await userService.FindAll();
         }
         [HttpGet("{id}")]
-        public async Task<User> GetById(int id)
+        public async Task<UserCommand> GetById(int id)
         {
             return await userService.FindById(id);
         }
@@ -50,7 +49,7 @@ namespace InnoGotchiWebAPI.Controllers
         //    await userService.DeleteByName(name);
         //}
         [HttpPatch("{id}")]
-        public async Task Patch(User user)
+        public async Task Patch(UserCommand user)
         {
 
             await userService.Update(user);
@@ -67,7 +66,7 @@ namespace InnoGotchiWebAPI.Controllers
         {
             await userService.AddFarmToUser(id, addFarmToUserDTO);
         }
-       
-       
+
+
     }
 }

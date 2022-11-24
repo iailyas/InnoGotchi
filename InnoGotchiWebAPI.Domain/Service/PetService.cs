@@ -1,8 +1,10 @@
 ﻿
+using AutoMapper;
 using InnoGotchiWebAPI.Domain.DTO;
 using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Domain.Service.Interfaces;
 using InnoGotchiWebAPI.Infrastructure.RepositoryInterfaces;
+using InnoGotchiWebAPI.Mapper.Commands;
 using Microsoft.AspNetCore.Hosting;
 
 namespace InnoGotchiWebAPI.Domain.Service
@@ -11,16 +13,18 @@ namespace InnoGotchiWebAPI.Domain.Service
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private IPetRepository petRepository;
+        private IMapper mapper;
 
-        public PetService(IWebHostEnvironment webHostEnvironment, IPetRepository petRepository)
+        public PetService(IWebHostEnvironment webHostEnvironment, IPetRepository petRepository, IMapper mapper)
         {
             _webHostEnvironment = webHostEnvironment;
             this.petRepository = petRepository;
+            this.mapper = mapper;
         }
 
         public async Task AddCharacteristicToPet(int id, AddCharacteristicToPetDTO addCharacteristicToPetDTO)
         {
-           await petRepository.AddCharacteristicToPet(id, addCharacteristicToPetDTO);
+            await petRepository.AddCharacteristicToPet(id, addCharacteristicToPetDTO);
         }
 
         public async Task AddLookToPet(int id, AddLookToPetDTO lookToPetDTO, IWebHostEnvironment webHostEnvironment)
@@ -38,24 +42,29 @@ namespace InnoGotchiWebAPI.Domain.Service
             await petRepository.DeleteByName(userName);
         }
 
-        public async Task<IEnumerable<Pet>> FindAll()
+        public async Task<IEnumerable<PetCommand>> FindAll()
         {
-            return await petRepository.FindAll();
+            var pets = await petRepository.FindAll();
+            mapper.Map<IEnumerable<Pet>>(pets);
+            return mapper.Map<IEnumerable<PetCommand>>(pets);
         }
 
-        public async Task<Pet> FindById(int id)
+        public async Task<PetCommand> FindById(int id)
         {
-            return await petRepository.FindById(id);
+            var pet = await petRepository.FindById(id);
+            return mapper.Map<PetCommand>(pet);
         }
 
-        public async Task<Pet> FindByName(string petName)
+        public async Task<PetCommand> FindByName(string petName)
         {
-            return await petRepository.FindByName(petName);
+            var pet = await petRepository.FindByName(petName);
+
+            return mapper.Map<PetCommand>(pet);
         }
 
-        public async Task Update(Pet pet)
+        public async Task Update(PetCommand pet)
         {
-            await petRepository.Update(pet);
+            await petRepository.Update(mapper.Map<Pet>(pet));
         }
     }
 }

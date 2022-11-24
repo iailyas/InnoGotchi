@@ -1,17 +1,18 @@
 ﻿using InnoGotchiWebAPI.Domain.DTO;
 using InnoGotchiWebAPI.Domain.Models;
+using InnoGotchiWebAPI.Mapper.Commands;
 
 namespace InnoGotchiWebAPI.Domain.Service.Interfaces
 {
     public interface IFarmService 
     {
-        Task<IEnumerable<Farm>> FindAll();
-        Task<Farm> FindById(int id);
-        Task<Farm> FindByName(string lastName);
+        Task<IEnumerable<FarmCommand>> FindAll();
+        Task<FarmCommand> FindById(int id);
+        Task<FarmCommand> FindByName(string lastName);
         Task AddPetToFarm(int id, AddPetToFarmDTO addPetToFarmDTO);
-        Task Update(Farm farm);
+        Task Update(FarmCommand farm);
         Task Delete(int id);
         Task DeleteByName(string farmName);
-        Task<Farm> UpdateFarmProp(int id, Farm updatedFarm);
+        Task<FarmCommand> UpdateFarmProp(int id, FarmCommand updatedFarm);
     }
 }

@@ -1,8 +1,7 @@
 ﻿using InnoGotchiWebAPI.Domain.DTO;
-using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Domain.Service.Interfaces;
+using InnoGotchiWebAPI.Mapper.Commands;
 using Microsoft.AspNetCore.Mvc;
-using System.Xml.Linq;
 
 namespace InnoGotchiWebAPI.Controllers
 {
@@ -20,12 +19,12 @@ namespace InnoGotchiWebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Pet>> Get()
+        public async Task<IEnumerable<PetCommand>> Get()
         {
             return await petService.FindAll();
         }
         [HttpGet("{id}")]
-        public async Task<Pet> GetById(int id)
+        public async Task<PetCommand> GetById(int id)
         {
             return await petService.FindById(id);
         }
@@ -35,9 +34,9 @@ namespace InnoGotchiWebAPI.Controllers
         //    return await petService.FindByName(name);
         //}
         [HttpPost("/AddLookToPet")]
-        public async Task AddLookToPet(int id,[FromForm]AddLookToPetDTO look)
+        public async Task AddLookToPet(int id, [FromForm] AddLookToPetDTO look)
         {
-            await petService.AddLookToPet(id,look,env);
+            await petService.AddLookToPet(id, look, env);
         }
         [HttpPost("/AddCharacteristicToPet")]
         public async Task AddCharacteristicToPet(int id, AddCharacteristicToPetDTO addCharacteristicToPetDTO)
@@ -55,7 +54,7 @@ namespace InnoGotchiWebAPI.Controllers
         //    await petService.DeleteByName(name);
         //}
         [HttpPatch("{id}")]
-        public async Task  Patch(Pet pet)
+        public async Task Patch(PetCommand pet)
         {
             await petService.Update(pet);
         }

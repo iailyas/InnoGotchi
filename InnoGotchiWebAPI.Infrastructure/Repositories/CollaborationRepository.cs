@@ -31,8 +31,9 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
 
         public async Task<IEnumerable<Collaboration>> FindAll()
         {
-            return await context.Collaboration.AsNoTracking().ToListAsync();
+            return await context.Collaboration.ToListAsync();
         }
+
 
         public async Task<Collaboration> FindById(int id)
         {

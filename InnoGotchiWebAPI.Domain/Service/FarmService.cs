@@ -1,18 +1,22 @@
 ﻿
+using AutoMapper;
 using InnoGotchiWebAPI.Domain.DTO;
 using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Domain.Service.Interfaces;
 using InnoGotchiWebAPI.Infrastructure.RepositoryInterfaces;
+using InnoGotchiWebAPI.Mapper.Commands;
 
 namespace InnoGotchiWebAPI.Domain.Service
 {
     public class FarmService : IFarmService
     {
         private IFarmRepository farmRepository;
+        private IMapper mapper;
 
-        public FarmService(IFarmRepository farmRepository)
+        public FarmService(IFarmRepository farmRepository, IMapper mapper)
         {
             this.farmRepository = farmRepository;
+            this.mapper = mapper;
         }
 
         public async Task AddPetToFarm(int id, AddPetToFarmDTO addPetToFarmDTO)
@@ -30,30 +34,38 @@ namespace InnoGotchiWebAPI.Domain.Service
             await farmRepository.DeleteByName(farmName);
         }
 
-        public async Task<IEnumerable<Farm>> FindAll()
+        public async Task<IEnumerable<FarmCommand>> FindAll()
         {
-            return await farmRepository.FindAll();
+            var Farms = await farmRepository.FindAll();
+
+            return mapper.Map<IEnumerable<FarmCommand>>(Farms);
         }
 
-        public async Task<Farm> FindById(int id)
+        public async Task<FarmCommand> FindById(int id)
         {
-            return await farmRepository.FindById(id);
+            var farm = await farmRepository.FindById(id);
+
+            return mapper.Map<FarmCommand>(farm);
         }
 
-        public async Task<Farm> FindByName(string lastName)
+        public async Task<FarmCommand> FindByName(string lastName)
         {
-            return await farmRepository.FindByName(lastName);
+            var farm = await farmRepository.FindByName(lastName);
+            return mapper.Map<FarmCommand>(lastName);
         }
 
-        public async Task Update(Farm farm)
+        public async Task Update(FarmCommand farm)
         {
-            await farmRepository.Update(farm);
+            await farmRepository.Update(mapper.Map<Farm>(farm));
         }
 
-        public async Task<Farm> UpdateFarmProp(int id, Farm updatedFarm)
+        public async Task<FarmCommand> UpdateFarmProp(int id, FarmCommand updatedFarm)
         {
-            return await farmRepository.UpdateFarmProp(id, updatedFarm);
-            
+            var farm = mapper.Map<Farm>(updatedFarm);
+
+
+            return mapper.Map<FarmCommand>(await farmRepository.UpdateFarmProp(id, farm));
+
         }
     }
 }

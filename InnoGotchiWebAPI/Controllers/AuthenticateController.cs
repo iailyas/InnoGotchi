@@ -24,16 +24,17 @@ namespace InnoGotchiWebAPI.Controllers
             this.configuration = configuration;
         }
         [HttpGet("CurrentUser")]
-        
+
         public async Task<string> GetCurrentUserId()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
-        var userName = User.FindFirstValue(ClaimTypes.Name); // will give the user's userName
-         var applicationUser = await userManager.GetUserAsync(User);
-            string? user = applicationUser?.UserName; // will give the user's Email
-            return user;
+            var userName = User.FindFirstValue(ClaimTypes.Name); // will give the user's userName
+            var applicationUser = await userManager.GetUserAsync(User);
+
+            string user = applicationUser.UserName; // will give the user's Email
+            return applicationUser.UserName;
         }
-        
+
         [HttpPost("/login")]
         public async Task<IActionResult> Login(LoginModel loginModel)
         {
@@ -60,7 +61,7 @@ namespace InnoGotchiWebAPI.Controllers
             return Unauthorized();
         }
         [HttpPost("/register")]
-       
+
         public async Task<IActionResult> Register([FromBody] RegisterModel registerModel)
         {
             var userExists = await userManager.FindByNameAsync(registerModel.UserName);

@@ -4158,6 +4158,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "AutoMapper": "12.0.0",
           "Microsoft.AspNet.WebApi.Core": "5.2.9",
           "Microsoft.EntityFrameworkCore": "6.0.10",
           "Microsoft.EntityFrameworkCore.InMemory": "6.0.10",

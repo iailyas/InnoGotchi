@@ -1,8 +1,6 @@
 ﻿using InnoGotchiWebAPI.Domain.DTO;
-using InnoGotchiWebAPI.Domain.Models;
-using InnoGotchiWebAPI.Domain.Service;
 using InnoGotchiWebAPI.Domain.Service.Interfaces;
-using Microsoft.AspNetCore.Http;
+using InnoGotchiWebAPI.Mapper.Commands;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InnoGotchiWebAPI.Controllers
@@ -17,12 +15,12 @@ namespace InnoGotchiWebAPI.Controllers
             this.farmService = farmService;
         }
         [HttpGet]
-        public async Task<IEnumerable<Farm>> Get()
+        public async Task<IEnumerable<FarmCommand>> Get()
         {
             return await farmService.FindAll();
         }
         [HttpGet("{id}")]
-        public async Task<Farm> GetById(int id)
+        public async Task<FarmCommand> GetById(int id)
         {
             return await farmService.FindById(id);
         }
@@ -47,14 +45,14 @@ namespace InnoGotchiWebAPI.Controllers
         //    await farmService.DeleteByName(name);
         //}
         [HttpPatch("{id}")]
-        public async Task Patch(Farm farm)
+        public async Task Patch(FarmCommand farm)
         {
             await farmService.Update(farm);
         }
         [HttpPut]
-        public async Task<Farm> Update(int id,Farm farm)
+        public async Task<FarmCommand> Update(int id, FarmCommand farm)
         {
-            return await farmService.UpdateFarmProp(id,farm);
+            return await farmService.UpdateFarmProp(id, farm);
         }
     }
 }

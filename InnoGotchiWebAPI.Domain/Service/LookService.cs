@@ -1,17 +1,21 @@
 ﻿
+using AutoMapper;
 using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Domain.Service.Interfaces;
 using InnoGotchiWebAPI.Infrastructure.RepositoryInterfaces;
+using InnoGotchiWebAPI.Mapper.Commands;
 
 namespace InnoGotchiWebAPI.Domain.Service
 {
     public class LookService : ILookService
     {
-        ILookRepository lookRepository;
+        private ILookRepository lookRepository;
+        private IMapper mapper;
 
-        public LookService(ILookRepository lookRepository)
+        public LookService(ILookRepository lookRepository, IMapper mapper)
         {
             this.lookRepository = lookRepository;
+            this.mapper = mapper;
         }
 
         public async Task Delete(int id)
@@ -24,14 +28,16 @@ namespace InnoGotchiWebAPI.Domain.Service
         //    await lookRepository.DeleteByName(lookName);
         //}
 
-        public async Task<IEnumerable<Look>> FindAll()
+        public async Task<IEnumerable<LookCommand>> FindAll()
         {
-            return await lookRepository.FindAll();
+            var users = await lookRepository.FindAll();
+            return mapper.Map<IEnumerable<LookCommand>>(users);
         }
 
-        public async Task<Look> FindById(int id)
+        public async Task<LookCommand> FindById(int id)
         {
-            return await lookRepository.FindById(id);
+            var look = await lookRepository.FindById(id);
+            return mapper.Map<LookCommand>(look);
         }
 
         //public async Task<Look> FindByName(string lookName)
@@ -39,9 +45,10 @@ namespace InnoGotchiWebAPI.Domain.Service
         //   return await lookRepository.FindByName(lookName);
         //}
 
-        public async Task Update(Look look)
+        public async Task Update(LookCommand look)
         {
-            await lookRepository.Update(look);
+
+            await lookRepository.Update(mapper.Map<Look>(look));
         }
     }
 }

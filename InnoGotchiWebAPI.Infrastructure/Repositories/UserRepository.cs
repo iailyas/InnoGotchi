@@ -19,6 +19,11 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
             this.mainDbContext = mainDbContext;
         }
 
+        public IEnumerable<Collaboration> GetCollaboration(int userId) 
+        {
+            var collaborations = mainDbContext.Collaboration.Where(a => a.UserId==userId);
+            return collaborations;
+        }
         public async Task AddCollaborationToUser(int id, AddCollaborationToUserDTO collaborationDTO)
         {
             var user = await FindById(id);
