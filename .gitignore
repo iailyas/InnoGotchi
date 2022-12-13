@@ -6,3 +6,5 @@
 *.bin 
 *.obj
 *.jpg
+InnoGotchiWebAPI/obj/Debug/net6.0/InnoGotchiWebAPI.csproj.AssemblyReference.cache
+InnoGotchiWebAPI.Infrastructure/obj/Debug/net6.0/InnoGotchiWebAPI.Infrastructure.csproj.AssemblyReference.cache
