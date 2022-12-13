@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InnoGotchiWebAPI.Infrastructure.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20221116175755_Initial")]
+    [Migration("20221211112136_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
