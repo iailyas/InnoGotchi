@@ -10,3 +10,5 @@
 *.csproj
 *.rej
 *.json
+InnoGotchiWebAPI.Domain/obj/InnoGotchiWebAPI.Domain.csproj.nuget.g.props
+InnoGotchiWebAPI.Domain/obj/InnoGotchiWebAPI.Domain.csproj.nuget.g.targets
