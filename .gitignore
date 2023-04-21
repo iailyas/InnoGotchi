@@ -5,4 +5,14 @@
 *.vs 
 *.bin 
 *.obj
+<<<<<<< HEAD
 *.jpg
+=======
+*.rej
+*.cs
+*.cache
+*.editorconfig
+*.json
+*.props
+*.targets
+>>>>>>> development

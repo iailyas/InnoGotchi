@@ -1,5 +1,6 @@
 ﻿
 using InnoGotchiWebAPI.Domain.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Extensions;
 using System.Drawing;
@@ -9,6 +10,7 @@ namespace InnoGotchiWebAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+  
     public class FileUploadController:ControllerBase
     {
         private IWebHostEnvironment webHostEnvironment;
@@ -22,7 +24,8 @@ namespace InnoGotchiWebAPI.Controllers
         {
             try
             {
-                string path = webHostEnvironment.ContentRootPath + "\\Uploads\\";
+
+                string path = "F:\\prog\\myrepository\\Angular\\AngularApp\\src\\assets\\images\\";
                 using (FileStream fs = System.IO.File.Create(path + user.Avatar.FileName))
                 {
                     await user.Avatar.CopyToAsync(fs);
@@ -41,7 +44,7 @@ namespace InnoGotchiWebAPI.Controllers
         {
             try
             {
-                string path = webHostEnvironment.ContentRootPath + "\\Uploads\\";
+                string path = "F:\\prog\\myrepository\\Angular\\AngularApp\\src\\assets\\images\\";
                 using (FileStream fs = System.IO.File.Create(path + file.FileName))
                 {
                     await file.CopyToAsync(fs);
@@ -58,12 +61,13 @@ namespace InnoGotchiWebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(string filename) 
         {
-            string path = webHostEnvironment.ContentRootPath+"\\Uploads\\";
+
+            string path = "F:\\prog\\myrepository\\Angular\\AngularApp\\src\\assets\\images\\";
             var filePath = Path.Combine(path, filename)+".jpg";
             if (System.IO.File.Exists(filePath))
             {
                 byte[] b = System.IO.File.ReadAllBytes(filePath);
-                return File(b, "image/jpg");
+                return File(b, "jpg");
             }
             return null;
         }
@@ -71,18 +75,19 @@ namespace InnoGotchiWebAPI.Controllers
         public async Task<IActionResult> GetAll()
         {
             byte[] b=null;
-            string[] allfiles = Directory.GetFiles(webHostEnvironment.ContentRootPath + "\\Uploads\\");
+            string[] allfiles = Directory.GetFiles("F:\\prog\\myrepository\\Angular\\AngularApp\\src\\assets\\images\\");
             foreach (string file in allfiles)
             {
-                var filePath = Path.Combine(webHostEnvironment.ContentRootPath + "\\Uploads\\", file) + ".jpg";
+                var filePath = Path.Combine("F:\\prog\\myrepository\\Angular\\AngularApp\\src\\assets\\images\\", file) + ".jpg";
                 if (System.IO.File.Exists(filePath))
                 {
                     b = System.IO.File.ReadAllBytes(filePath);
                     
                 }
+                return File(b, "jpg");
             }
-            return File(b, "image/jpg");
-            return null;
+            
+          return null;
            
            
         }

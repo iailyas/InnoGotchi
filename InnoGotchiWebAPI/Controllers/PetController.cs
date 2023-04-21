@@ -1,13 +1,15 @@
 ﻿using InnoGotchiWebAPI.Domain.DTO;
 using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Domain.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
 
 namespace InnoGotchiWebAPI.Controllers
 {
-    [Route("[controller]")]
+    [Route("[controller]")/*,Authorize*/]
     [ApiController]
+    [Authorize]
     public class PetController : ControllerBase
     {
         private IPetService petService;

@@ -4,6 +4,7 @@ using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Infrastructure.RepositoryInterfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Core.Types;
 using System.ComponentModel.DataAnnotations;
 
 namespace InnoGotchiWebAPI.Infrastructure.Repositories
@@ -69,7 +70,8 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
 
             try
             {
-                string path = webHostEnvironment.ContentRootPath + "\\Uploads\\";
+
+                string path = "F:\\prog\\myrepository\\Angular\\AngularApp\\src\\assets\\images\\";
                 using (FileStream fs = System.IO.File.Create(path + entity.Avatar.FileName))
                 {
                     await entity.Avatar.CopyToAsync(fs);

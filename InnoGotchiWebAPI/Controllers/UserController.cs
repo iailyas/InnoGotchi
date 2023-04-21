@@ -2,12 +2,14 @@ using AutoMapper;
 using InnoGotchiWebAPI.Domain.DTO;
 using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Domain.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InnoGotchiWebAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+
     public class UserController : ControllerBase
     {
         private IUserService userService;
@@ -18,12 +20,13 @@ namespace InnoGotchiWebAPI.Controllers
             this.userService = userService;
             this.webHostEnvironment = webHostEnvironment;
         }
-
+        [Authorize]
         [HttpGet(Name = "Get")]
         public async Task<IEnumerable<User>> Get()
         {
             return await userService.FindAll();
         }
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<User> GetById(int id)
         {
@@ -34,11 +37,13 @@ namespace InnoGotchiWebAPI.Controllers
         //{
         //    return await userService.FindByName(name);
         //}
+       
         [HttpPost(Name = "Post")]
         public async Task Post([FromForm] UserDTO user)
         {
             await userService.Create(user, webHostEnvironment);
         }
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
@@ -49,6 +54,7 @@ namespace InnoGotchiWebAPI.Controllers
         //{
         //    await userService.DeleteByName(name);
         //}
+        [Authorize]
         [HttpPatch("{id}")]
         public async Task Patch(User user)
         {
@@ -56,12 +62,13 @@ namespace InnoGotchiWebAPI.Controllers
             await userService.Update(user);
         }
 
-
+        [Authorize]
         [HttpPost("/AddCollaborationToUser")]
         public async Task AddCollabprationToUser(int id, AddCollaborationToUserDTO collaborationDTO)
         {
             await userService.AddCollaborationToUser(id, collaborationDTO);
         }
+        [Authorize]
         [HttpPost("/AddFarmToUser")]
         public async Task AddFarmToUser(int id, AddFarmToUserDTO addFarmToUserDTO)
         {

@@ -1,11 +1,12 @@
 ﻿using InnoGotchiWebAPI.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 namespace InnoGotchiWebAPI.Controllers
 {
@@ -23,15 +24,16 @@ namespace InnoGotchiWebAPI.Controllers
             this.roleManager = roleManager;
             this.configuration = configuration;
         }
-        [HttpGet("CurrentUser")]
+        [HttpGet("CurrentUser"),Authorize]
         
         public async Task<string> GetCurrentUserId()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
-        var userName = User.FindFirstValue(ClaimTypes.Name); // will give the user's userName
-         var applicationUser = await userManager.GetUserAsync(User);
-            string? user = applicationUser?.UserName; // will give the user's Email
-            return user;
+            var identity = HttpContext.User.Identity.Name;
+            if (identity!=null) 
+            {
+                return identity;
+            }
+            return null;
         }
         
         [HttpPost("/login")]
@@ -43,42 +45,55 @@ namespace InnoGotchiWebAPI.Controllers
                 var userRoles = await userManager.GetRolesAsync(user);
                 var authClaims = new List<Claim>
                 {
+                    new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
+                    //user от identityuser<long>
                     new Claim(ClaimTypes.Name,user.UserName),
-                    new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
+                    new Claim(ClaimTypes.Role,UserRoles.User),
                 };
                 foreach (var userRole in userRoles)
                 {
                     authClaims.Add(new Claim(ClaimTypes.Role, userRole));
                 }
-                var token = GetToken(authClaims);
-                return Ok(new
+                foreach (var authclaim in authClaims) 
                 {
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo
-                });
+                    await userManager.AddClaimAsync(user, authclaim);
+                }
+                
+
+                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]));
+
+                var token = new JwtSecurityToken(
+                    expires: DateTime.Now.AddHours(3),
+                    claims: authClaims,
+                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                    );
+                
+                return Ok(
+                
+                    new JwtSecurityTokenHandler().WriteToken(token));
             }
             return Unauthorized();
         }
         [HttpPost("/register")]
        
-        public async Task<IActionResult> Register([FromBody] RegisterModel registerModel)
+        public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            var userExists = await userManager.FindByNameAsync(registerModel.UserName);
+            var userExists = await userManager.FindByNameAsync(model.UserName);
             if (userExists != null)
+                throw new ValidationException("Error. User already exists! ");
+
+            IdentityUser user = new IdentityUser()
             {
-                return StatusCode(500, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
-            }
-            IdentityUser user = new()
-            {
-                Email = registerModel.Email,
+                Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = registerModel.UserName
+                UserName = model.UserName
             };
-            var result = await userManager.CreateAsync(user, registerModel.Password);
+            var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
-            {
-                return StatusCode(500, new Response { Status = "Error", Message = "User already exists!" });
-            }
+                throw new ValidationException("Error. User creation failed! Please check user details and try again.");
+            //result = await userManager.AddToRoleAsync(user,"Administrator");
+            //if (!result.Succeeded)
+            //    throw new ValidationException("Error. User creation failed! Please check user details and try again.");
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
         [HttpPost]

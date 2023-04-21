@@ -4,9 +4,11 @@ using InnoGotchiWebAPI.Infrastructure;
 using InnoGotchiWebAPI.Infrastructure.Repositories;
 using InnoGotchiWebAPI.Infrastructure.RepositoryInterfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Text.Json.Serialization;
 //var mapperConfig = new MapperConfiguration(mc =>
@@ -38,34 +40,64 @@ builder.Services.AddTransient<IFarmService, FarmService>();
 builder.Services.AddTransient<ICollaborationService, CollaborationService>();
 builder.Services.AddTransient<ICharacteristicService, CharacteristicService>();
 
-builder.Services.AddAuthentication(options =>
+
+
+// Adding Authentication  
+var Secret = configuration["JWT:Secret"];
+
+builder.Services.AddAuthentication(cfg =>
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    cfg.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    cfg.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-.AddJwtBearer(options =>
+.AddJwtBearer(cfg =>
 {
-    options.SaveToken = true;
-    options.RequireHttpsMetadata = false;
-    options.TokenValidationParameters = new TokenValidationParameters()
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidAudience = configuration["JWT:ValidAudience"],
-        ValidIssuer = configuration["JWT:ValidIssuer"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
-    };
+cfg.TokenValidationParameters = new TokenValidationParameters()
+{
+ValidateIssuer = false,
+ValidateAudience = false,
+ValidateIssuerSigningKey = false,
+IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Secret)),
 
-
-}
-);
+};
+});
 
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    // To Enable authorization using Swagger (JWT)    
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter 'Bearer' [space] and then your valid token in the text input below.\r\n\r\nExample: \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\"",
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                          new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            new string[] {}
+
+                    }
+                });
+
+
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "iTechArtPetsitters.WebUI", Version = "v1" });
+});
+        
 
 
 var app = builder.Build();
@@ -81,9 +113,11 @@ app.UseHttpsRedirection();
 
 app.UseCors(policy => policy.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
-app.UseAuthentication();
-app.UseAuthorization();
+app.UseRouting();
 
+app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.MapControllers();
 

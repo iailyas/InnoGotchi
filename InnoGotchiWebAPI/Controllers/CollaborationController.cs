@@ -2,6 +2,7 @@
 using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Domain.Service;
 using InnoGotchiWebAPI.Domain.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace InnoGotchiWebAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class CollaborationController : ControllerBase
     {
         ICollaborationService collaborationService;
