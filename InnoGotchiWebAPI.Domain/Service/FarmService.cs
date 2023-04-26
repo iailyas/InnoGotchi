@@ -20,6 +20,11 @@ namespace InnoGotchiWebAPI.Domain.Service
             await farmRepository.AddPetToFarm(id, addPetToFarmDTO);
         }
 
+        public IEnumerable<Farm> CurrentUserFarms(string currentUserName)
+        {
+            return farmRepository.CurrentUserFarms(currentUserName);
+        }
+
         public async Task Delete(int id)
         {
             await farmRepository.Delete(id);

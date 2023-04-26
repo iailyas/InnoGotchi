@@ -19,5 +19,6 @@ namespace InnoGotchiWebAPI.Domain.Service.Interfaces
         Task Update(Pet pet);
         Task Delete(int id);
         Task DeleteByName(string userName);
+        Task<IEnumerable<Pet>> CurrentFarmPets(int farmId);
     }
 }

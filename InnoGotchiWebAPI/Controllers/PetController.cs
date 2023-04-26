@@ -9,7 +9,7 @@ namespace InnoGotchiWebAPI.Controllers
 {
     [Route("[controller]")/*,Authorize*/]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class PetController : ControllerBase
     {
         private IPetService petService;
@@ -30,6 +30,11 @@ namespace InnoGotchiWebAPI.Controllers
         public async Task<Pet> GetById(int id)
         {
             return await petService.FindById(id);
+        }
+        [HttpGet("/PetByFarmId")]
+        public async Task<IEnumerable<Pet>> GetPetsByFarm(int FarmId)
+        {
+            return await petService.CurrentFarmPets(FarmId);
         }
         //[HttpGet("{name}")]
         //public async Task<Pet> GetByName(string name)

@@ -14,5 +14,6 @@ namespace InnoGotchiWebAPI.Infrastructure.RepositoryInterfaces
         Task Delete(int id);
         Task DeleteByName(string farmName);
         Task<Farm> UpdateFarmProp(int id, Farm updatedFarm);
+        IEnumerable<Farm> CurrentUserFarms(string currentUserName);
     }
 }

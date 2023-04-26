@@ -28,6 +28,11 @@ namespace InnoGotchiWebAPI.Domain.Service
             await petRepository.AddLookToPet(id, lookToPetDTO, webHostEnvironment);
         }
 
+        public async Task<IEnumerable<Pet>> CurrentFarmPets(int farmId)
+        {
+           return await petRepository.CurrentFarmPets(farmId);
+        }
+
         public async Task Delete(int id)
         {
             await petRepository.Delete(id);

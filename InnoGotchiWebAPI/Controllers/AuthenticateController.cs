@@ -1,4 +1,5 @@
 ﻿using InnoGotchiWebAPI.Domain.Models;
+using InnoGotchiWebAPI.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,17 +18,21 @@ namespace InnoGotchiWebAPI.Controllers
         private readonly UserManager<IdentityUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IConfiguration configuration;
+        private readonly MainDbContext context;
 
-        public AuthenticateController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AuthenticateController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, MainDbContext context)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.configuration = configuration;
+            this.context = context;
         }
+
         [HttpGet("CurrentUser"),Authorize]
         
         public async Task<string> GetCurrentUserId()
         {
+            
             var identity = HttpContext.User.Identity.Name;
             if (identity!=null) 
             {
@@ -78,9 +83,11 @@ namespace InnoGotchiWebAPI.Controllers
        
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
+          
             var userExists = await userManager.FindByNameAsync(model.UserName);
             if (userExists != null)
                 throw new ValidationException("Error. User already exists! ");
+
 
             IdentityUser user = new IdentityUser()
             {
@@ -88,6 +95,7 @@ namespace InnoGotchiWebAPI.Controllers
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.UserName
             };
+            await context.Registration.AddAsync(model);
             var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
                 throw new ValidationException("Error. User creation failed! Please check user details and try again.");

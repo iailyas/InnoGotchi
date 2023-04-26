@@ -194,6 +194,31 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                     b.ToTable("Pet");
                 });
 
+            modelBuilder.Entity("InnoGotchiWebAPI.Domain.Models.RegisterModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Registration");
+                });
+
             modelBuilder.Entity("InnoGotchiWebAPI.Domain.Models.User", b =>
                 {
                     b.Property<int>("Id")

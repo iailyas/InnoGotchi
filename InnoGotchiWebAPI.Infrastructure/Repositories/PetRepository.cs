@@ -4,6 +4,7 @@ using InnoGotchiWebAPI.Domain.DTO;
 using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Infrastructure.RepositoryInterfaces;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 namespace InnoGotchiWebAPI.Infrastructure.Repositories
@@ -117,6 +118,10 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
         {
             context.Update(pet);
             await context.SaveChangesAsync();
+        }
+        public async Task<IEnumerable<Pet>> CurrentFarmPets(int farmId)
+        {
+            return await context.Pet.AsNoTracking().Where(c => c.FarmId == farmId).ToListAsync();           
         }
     }
 }

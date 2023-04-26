@@ -17,6 +17,7 @@ namespace InnoGotchiWebAPI.Infrastructure
         public DbSet<User> User { get; set; }
         public DbSet<Farm> Farm { get; set; }
         public DbSet<Pet> Pet { get; set; }
+        public DbSet<RegisterModel> Registration { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

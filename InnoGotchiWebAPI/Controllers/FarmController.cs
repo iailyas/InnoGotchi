@@ -10,7 +10,7 @@ namespace InnoGotchiWebAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [Authorize]
+   // [Authorize]
     public class FarmController : ControllerBase
     {
         IFarmService farmService;
@@ -22,6 +22,11 @@ namespace InnoGotchiWebAPI.Controllers
         public async Task<IEnumerable<Farm>> Get()
         {
             return await farmService.FindAll();
+        }
+        [HttpGet("CurrentUserFarms")]
+        public async Task<IEnumerable<Farm>> CurrentUserFarms(string name)
+        {
+            return farmService.CurrentUserFarms(name);
         }
         [HttpGet("{id}")]
         public async Task<Farm> GetById(int id)

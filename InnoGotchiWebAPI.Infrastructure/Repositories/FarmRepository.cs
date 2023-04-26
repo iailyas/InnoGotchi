@@ -1,7 +1,10 @@
 ﻿using InnoGotchiWebAPI.Domain.DTO;
 using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Infrastructure.RepositoryInterfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Xml.Linq;
 
 namespace InnoGotchiWebAPI.Infrastructure.Repositories
 {
@@ -41,6 +44,8 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
             await context.SaveChangesAsync();
         }
 
+       
+
         public async Task DeleteByName(string farmName)
         {
             var farm = FindByName(farmName);
@@ -74,5 +79,19 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
             context.Update(farm);
             await context.SaveChangesAsync();
         }
+
+        public IEnumerable<Farm> CurrentUserFarms(string currentUserName)
+        {
+
+            
+            var user = context.Registration.AsNoTracking().Single();
+            var id = user.Id;
+            return context.Farm.AsNoTracking().Where(c=>c.UserId==id).ToList();
+            //return farms;
+        }
+
+        
+
+
     }
 }

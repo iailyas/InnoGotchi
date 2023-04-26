@@ -35,5 +35,6 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
             context.Update(characteristic);
             await context.SaveChangesAsync();
         }
+       
     }
 }
