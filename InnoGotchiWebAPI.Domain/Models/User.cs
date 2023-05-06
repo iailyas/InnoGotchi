@@ -12,6 +12,8 @@ namespace InnoGotchiWebAPI.Domain.Models
         [StringLength(255)]
         public string Role { get; set; }
         [StringLength(255)]
+        public string UserName { get; set; }
+        //public string Password { get; set; }
         public string Email { get; set; }
         public string? Avatar { get; set; }
         //public int? CollaborationId { get; set; }

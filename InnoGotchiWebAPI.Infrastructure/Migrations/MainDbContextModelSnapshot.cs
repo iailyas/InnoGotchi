@@ -232,8 +232,7 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("text");
 
                     b.Property<string>("First_Name")
                         .IsRequired()
@@ -246,6 +245,11 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                         .HasColumnType("character varying(255)");
 
                     b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");

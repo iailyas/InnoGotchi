@@ -9,6 +9,7 @@ namespace InnoGotchiWebAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+   // [Authorize]
 
     public class UserController : ControllerBase
     {
@@ -32,12 +33,13 @@ namespace InnoGotchiWebAPI.Controllers
         {
             return await userService.FindById(id);
         }
-        //[HttpGet("{name}")]
-        //public async Task<User> GetByName(string name)
-        //{
-        //    return await userService.FindByName(name);
-        //}
-       
+        [HttpGet("/current/{name}")]
+        [Authorize]
+        public async Task<User> GetByName(string name)
+        {
+            return await userService.FindByName(name);
+        }
+
         [HttpPost(Name = "Post")]
         public async Task Post([FromForm] UserDTO user)
         {

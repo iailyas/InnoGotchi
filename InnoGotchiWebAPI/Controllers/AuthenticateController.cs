@@ -3,10 +3,13 @@ using InnoGotchiWebAPI.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Principal;
 using System.Text;
 
 namespace InnoGotchiWebAPI.Controllers
@@ -30,17 +33,47 @@ namespace InnoGotchiWebAPI.Controllers
 
         [HttpGet("CurrentUser"),Authorize]
         
-        public async Task<string> GetCurrentUserId()
+        public async Task<User> GetCurrentUserName()
         {
             
             var identity = HttpContext.User.Identity.Name;
             if (identity!=null) 
             {
+                return await context.User.AsNoTracking().FirstAsync(a => a.UserName == identity);
+               
+            }
+            return null;
+        }
+
+        [HttpGet("CurrentUserFarms"), Authorize]
+
+        public async Task<IEnumerable<Farm>> GetCurrentUserFarms()
+        {
+
+            var identity = HttpContext.User.Identity.Name;
+            if (identity != null)
+            {
+                var User =  await context.User.AsNoTracking().FirstAsync(a => a.UserName == identity);
+                return context.Farm.AsNoTracking().Where(a => a.UserId == User.Id);
+
+            }
+            return null;
+        }
+
+
+        [HttpGet("CurrentUserByName"), Authorize]
+
+        public async Task<string> GetCurrentUser()
+        {
+
+            var identity = HttpContext.User.Identity.Name;
+            if (identity != null)
+            {
                 return identity;
             }
             return null;
         }
-        
+
         [HttpPost("/login")]
         public async Task<IActionResult> Login(LoginModel loginModel)
         {
@@ -102,6 +135,7 @@ namespace InnoGotchiWebAPI.Controllers
             //result = await userManager.AddToRoleAsync(user,"Administrator");
             //if (!result.Succeeded)
             //    throw new ValidationException("Error. User creation failed! Please check user details and try again.");
+
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
         [HttpPost]

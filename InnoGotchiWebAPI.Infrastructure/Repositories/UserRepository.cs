@@ -82,7 +82,9 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
                         Last_Name = entity.Last_Name,
                         Role = entity.Role,
                         Email = entity.Email,
-                        Avatar = entity.Avatar.FileName
+                        UserName = entity.UserName,
+                        Avatar = entity.Avatar.FileName,
+                      //  Password = entity.Password
                     };
                     await mainDbContext.AddAsync(user);
                     await mainDbContext.SaveChangesAsync();
@@ -119,12 +121,12 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
 
         public async Task<User> FindById(int id)
         {
-            return await mainDbContext.User.AsNoTracking().SingleAsync(a => a.Id == id);
+            return await mainDbContext.User.AsNoTracking().FirstAsync(a => a.Id == id);
         }
 
-        public async Task<User> FindByName(string lastName)
+        public async Task<User> FindByName(string userName)
         {
-            return await mainDbContext.User.AsNoTracking().SingleAsync(a => a.Last_Name == lastName);
+            return await mainDbContext.User.AsNoTracking().FirstAsync(a => a.UserName == userName);
         }
 
         public async Task Update(User user)
