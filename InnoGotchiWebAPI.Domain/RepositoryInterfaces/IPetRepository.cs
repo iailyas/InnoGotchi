@@ -12,8 +12,13 @@ namespace InnoGotchiWebAPI.Infrastructure.RepositoryInterfaces
         Task AddLookToPet(int id, AddLookToPetDTO lookToPetDTO, IWebHostEnvironment webHostEnvironment);
         Task AddCharacteristicToPet(int id, AddCharacteristicToPetDTO addCharacteristicToPetDTO);
         Task Update(Pet pet);
+        Task UpdateTamagochi(Tamagochi tamagochi);
+        Task<Tamagochi> GetTamagochiById(int id);
         Task Delete(int id);
         Task DeleteByName(string userName);
         Task<IEnumerable<Pet>> CurrentFarmPets(int farmId);
+        public int GetScore(int id);
+        public Task UpdateFarmStats(int farmId);
+        public Task SetScore(int id, int score);
     }
 }

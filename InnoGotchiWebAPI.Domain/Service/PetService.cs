@@ -58,9 +58,35 @@ namespace InnoGotchiWebAPI.Domain.Service
             return await petRepository.FindByName(petName);
         }
 
+        public int GetScore(int id)
+        {
+           return petRepository.GetScore(id);
+        }
+
+        public async Task<Tamagochi> GetTamagochiById(int id)
+        {
+            return await petRepository.GetTamagochiById(id);
+        }
+
+        public async Task SetScore(int id, int score)
+        {
+            await petRepository.SetScore(id, score);
+        }
+
+
         public async Task Update(Pet pet)
         {
             await petRepository.Update(pet);
+        }
+
+        public async Task UpdateFarmStats(int farmId)
+        {
+            await petRepository.UpdateFarmStats(farmId);
+        }
+
+        public async Task UpdateTamagochi(Tamagochi tamagochi)
+        {
+           await petRepository.UpdateTamagochi(tamagochi);
         }
     }
 }

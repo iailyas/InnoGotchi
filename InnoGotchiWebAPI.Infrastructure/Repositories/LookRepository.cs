@@ -38,6 +38,19 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
             return await context.Look.AsNoTracking().SingleAsync(b => b.Id == id);
         }
 
+        public async Task<IEnumerable<Look>> GetLook(int lookId)
+        {
+            if (lookId == 1)
+            {
+                return await context.Look.Where(a => a.Id <= 11).ToListAsync();
+            }
+            if (lookId == 2)
+            {
+                return await context.Look.Where(a => a.Id > 11&&a.Id<=22).ToListAsync();
+            }
+            return null;
+        }
+
         public async Task Update(Look look)
         {
             context.Update(look);

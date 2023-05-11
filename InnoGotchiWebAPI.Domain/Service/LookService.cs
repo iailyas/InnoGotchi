@@ -34,6 +34,11 @@ namespace InnoGotchiWebAPI.Domain.Service
             return await lookRepository.FindById(id);
         }
 
+        public async Task<IEnumerable<Look>> GetLook(int lookId)
+        {
+            return await lookRepository.GetLook(lookId);
+        }
+
         //public async Task<Look> FindByName(string lookName)
         //{
         //   return await lookRepository.FindByName(lookName);

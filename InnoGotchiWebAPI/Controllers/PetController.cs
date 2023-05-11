@@ -31,6 +31,11 @@ namespace InnoGotchiWebAPI.Controllers
         {
             return await petService.FindById(id);
         }
+        [HttpPatch("/FarmStatsUpdate")]
+        public async Task Patch(int  farmID)
+        {
+            await petService.UpdateFarmStats(farmID);
+        }
         [HttpGet("/PetByFarmId")]
         public async Task<IEnumerable<Pet>> GetPetsByFarm(int FarmId)
         {
@@ -65,6 +70,26 @@ namespace InnoGotchiWebAPI.Controllers
         public async Task  Patch(Pet pet)
         {
             await petService.Update(pet);
+        }
+        [HttpGet("Tamagochi/{id}")]
+        public async Task<Tamagochi> GetTamagochiById(int id)
+        {
+           return await petService.GetTamagochiById(id);
+        }
+        [HttpGet("GetPetScore/{id}")]
+        public int GetScoreByPetId(int id)
+        {
+            return petService.GetScore(id);
+        }
+        [HttpPatch("SetPetScore/{id}")]
+        public async Task SetScoreByPetId(int id,int score)
+        {
+            await petService.SetScore(id,score);
+        }
+        [HttpPatch("Tamagochi/{id}")]
+        public async Task PatchTamagochi(Tamagochi tamagochi)
+        {
+            await petService.UpdateTamagochi(tamagochi);
         }
     }
 }

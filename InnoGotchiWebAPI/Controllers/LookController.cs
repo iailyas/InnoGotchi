@@ -28,7 +28,12 @@ namespace InnoGotchiWebAPI.Controllers
         {
             return await lookService.FindById(id);
         }
-        
+        [HttpGet("GetById/{id}")]
+        public async Task<IEnumerable<Look>> GetLookByid(int id)
+        {
+            return await lookService.GetLook(id);
+        }
+
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {

@@ -4,14 +4,17 @@ using InnoGotchiWebAPI.Domain.DTO;
 using InnoGotchiWebAPI.Domain.Models;
 using InnoGotchiWebAPI.Infrastructure.RepositoryInterfaces;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing;
 
 namespace InnoGotchiWebAPI.Infrastructure.Repositories
 {
     public class PetRepository : IPetRepository
     {
         private MainDbContext context;
+
 
         public PetRepository(MainDbContext context)
         {
@@ -85,6 +88,8 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
             }
         }
 
+
+
         public async Task Delete(int id)
         {
             var pet = await FindById(id);
@@ -114,6 +119,11 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
             return await context.Pet.AsNoTracking().SingleAsync(b => b.Name == petName);
         }
 
+        public async Task UpdateTamagochi(Tamagochi tamagochi)
+        {
+            context.Update(tamagochi);
+            await context.SaveChangesAsync();
+        }
         public async Task Update(Pet pet)
         {
             context.Update(pet);
@@ -121,7 +131,48 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
         }
         public async Task<IEnumerable<Pet>> CurrentFarmPets(int farmId)
         {
-            return await context.Pet.AsNoTracking().Where(c => c.FarmId == farmId).ToListAsync();           
+            return await context.Pet.AsNoTracking().Where(c => c.FarmId == farmId).ToListAsync();
+        }
+        public async Task UpdateFarmStats(int farmId)
+        {
+            var pets = await context.Pet.AsNoTracking().Where(c => c.FarmId == farmId).ToListAsync();
+            var alive = 0;
+            var dead = 0;
+            var counter = 0;
+            foreach (var pet in pets)
+            {
+                if (pet.Happiness_days_count != 0)
+                    dead += 1;
+                else
+                    alive += 1;
+                counter += pet.Happiness_days_count;
+            }
+            var farm = await context.Farm.AsNoTracking().SingleAsync(c => c.Id == farmId);
+            farm.Alive_pets_count = alive;
+            farm.Dead_pets_count = dead;
+            if (dead != 0)
+                farm.Average_pets_age = counter / dead;
+            context.Farm.Update(farm);
+            await context.SaveChangesAsync();
+
+        }
+
+        public async Task<Tamagochi> GetTamagochiById(int id)
+        {
+            return await context.Tamagochis.AsNoTracking().SingleAsync(b => b.PetId == id);
+        }
+
+        public int GetScore(int id)
+        {
+            return FindById(id).Result.Happiness_days_count;
+        }
+
+        public async Task SetScore(int id, int score)
+        {
+            var currentPet = await FindById(id);
+            currentPet.Happiness_days_count = score;
+            context.Pet.Update(currentPet);
+            await context.SaveChangesAsync();
         }
     }
 }

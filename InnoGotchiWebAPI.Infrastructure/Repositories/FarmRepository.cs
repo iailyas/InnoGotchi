@@ -12,6 +12,8 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
     {
         private MainDbContext context;
 
+
+
         public FarmRepository(MainDbContext context)
         {
             this.context = context;
@@ -33,18 +35,48 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
                 Thist_quenching = addPetToFarmDTO.Thist_quenching,
                 FarmId = id
             };
+            var tamagochi = new Tamagochi
+            {
+                Hunger = 100,
+                Play = 100,
+                Score = 0,
+                Sleep = 100,
+                Look = "\"♡＼(❤˘⌣˘❤)／♡\"",
+                PetId = 0
+            };
+
             await context.Pet.AddAsync(pet);
             await context.SaveChangesAsync();
+            var currentPet = await context.Pet.AsNoTracking().SingleAsync(b => b.Name == pet.Name); ;
+            tamagochi.PetId = currentPet.Id;
+            await context.Tamagochis.AddAsync(tamagochi);
+            await context.SaveChangesAsync();
+        }
+        public async Task<IEnumerable<Pet>> CurrentFarmPets(int farmId)
+        {
+            return await context.Pet.AsNoTracking().Where(c => c.FarmId == farmId).ToListAsync();
+        }
+        public async Task<IEnumerable<Tamagochi>> CurrentPetTamagochi(int petId)
+        {
+            return await context.Tamagochis.AsNoTracking().Where(c => c.PetId == petId).ToListAsync();
         }
 
         public async Task Delete(int id)
         {
             var farm = await FindById(id);
+            var pets = await CurrentFarmPets(id);
+            foreach (var pet in pets)
+            {
+              context.RemoveRange(await CurrentPetTamagochi(pet.Id));
+              context.Remove(pet); 
+            }
+
+           
             context.Remove(farm);
             await context.SaveChangesAsync();
         }
 
-       
+
 
         public async Task DeleteByName(string farmName)
         {
@@ -83,14 +115,14 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
         public IEnumerable<Farm> CurrentUserFarms(string currentUserName)
         {
 
-            
+
             var user = context.Registration.AsNoTracking().Single(a => a.UserName == currentUserName);
             var id = user.Id;
-            return context.Farm.AsNoTracking().Where(c=>c.UserId==id).ToList();
+            return context.Farm.AsNoTracking().Where(c => c.UserId == id).ToList();
             //return farms;
         }
 
-        
+
 
 
     }

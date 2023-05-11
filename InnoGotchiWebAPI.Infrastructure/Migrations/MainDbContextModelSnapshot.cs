@@ -155,6 +155,118 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                     b.HasIndex("PetId");
 
                     b.ToTable("Look");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Body = "＼( ❤‿❤ *)／"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Body = "ヽ(￣～￣　)ノ"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Body = "(ｏ・_・)"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Body = "(o-_-o)"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Body = "(｡•́︿•̀｡)"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Body = "(￣□￣」)"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Body = "＼(〇_ｏ)／"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Body = "ヽ(‵﹏´)ノ"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Body = "٩(╬ʘ益ʘ╬)۶"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Body = "~(> _ < ~)"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Body = "ψ(▼へ▼メ)～→"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Body = "ʕ ◕ᴥ◕ ʔ"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Body = "┏ʕ •ᴥ•ʔ┛"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Body = "ᵔᴥᵔ"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Body = "ʕ•̮͡•ʔ"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Body = "ᶘಠᴥಠᶅ"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Body = "ʕ •ₒ• ʔ"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Body = "ʕ – ᴥ – ʔ"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Body = "ʕ╯• ⊱ •╰ʔ"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Body = "ʕ ´•̥̥̥ ᴥ•̥̥̥`ʔ"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Body = "ʕ≧ᴥ≦ʔ"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Body = "・・・ʕ ˵ ̿–ᴥ ̿– ˵ ʔ"
+                        });
                 });
 
             modelBuilder.Entity("InnoGotchiWebAPI.Domain.Models.Pet", b =>
@@ -217,6 +329,40 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Registration");
+                });
+
+            modelBuilder.Entity("InnoGotchiWebAPI.Domain.Models.Tamagochi", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Hunger")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Look")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("PetId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Play")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Sleep")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PetId");
+
+                    b.ToTable("Tamagochis");
                 });
 
             modelBuilder.Entity("InnoGotchiWebAPI.Domain.Models.User", b =>
@@ -502,6 +648,15 @@ namespace InnoGotchiWebAPI.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Farm");
+                });
+
+            modelBuilder.Entity("InnoGotchiWebAPI.Domain.Models.Tamagochi", b =>
+                {
+                    b.HasOne("InnoGotchiWebAPI.Domain.Models.Pet", "Pet")
+                        .WithMany()
+                        .HasForeignKey("PetId");
+
+                    b.Navigation("Pet");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

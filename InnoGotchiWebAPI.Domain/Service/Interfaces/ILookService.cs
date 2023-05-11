@@ -9,6 +9,7 @@ namespace InnoGotchiWebAPI.Domain.Service.Interfaces
         //Task<Look> FindByName(string lookName);
         Task Update(Look look);
         Task Delete(int id);
+        Task<IEnumerable<Look>> GetLook(int lookId);
         //Task DeleteByName(string lookName);
     }
 }
