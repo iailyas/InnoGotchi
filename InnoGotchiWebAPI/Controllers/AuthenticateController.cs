@@ -49,14 +49,15 @@ namespace InnoGotchiWebAPI.Controllers
 
         [HttpGet("CurrentUserFarms"), Authorize]
 
-        public async Task<IEnumerable<Farm>> GetCurrentUserFarms()
+        public async Task<IQueryable<Farm>> GetCurrentUserFarms()
         {
 
             var identity = HttpContext.User.Identity.Name;
             if (identity != null)
             {
                 var User = await context.User.AsNoTracking().FirstAsync(a => a.UserName == identity);
-                return context.Farm.AsNoTracking().Where(a => a.UserId == User.Id);
+             //   var result = context.Farm.AsNoTracking().Where(a => a.UserId == User.Id).GroupBy(a=>a.Alive_pets_count);
+                return context.Farm.AsNoTracking().Where(a => a.UserId == User.Id).OrderBy(a => a.Name);
 
             }
             return null;

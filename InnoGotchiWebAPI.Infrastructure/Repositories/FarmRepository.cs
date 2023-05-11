@@ -118,7 +118,7 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
 
             var user = context.Registration.AsNoTracking().Single(a => a.UserName == currentUserName);
             var id = user.Id;
-            return context.Farm.AsNoTracking().Where(c => c.UserId == id).ToList();
+            return context.Farm.AsNoTracking().Where(c => c.UserId == id).OrderBy(a => a.Alive_pets_count).ToList();
             //return farms;
         }
 

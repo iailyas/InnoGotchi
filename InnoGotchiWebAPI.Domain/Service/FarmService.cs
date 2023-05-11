@@ -22,7 +22,7 @@ namespace InnoGotchiWebAPI.Domain.Service
 
         public IEnumerable<Farm> CurrentUserFarms(string currentUserName)
         {
-            return farmRepository.CurrentUserFarms(currentUserName);
+            return farmRepository.CurrentUserFarms(currentUserName).OrderBy(a=>a.Alive_pets_count);
         }
 
         public async Task Delete(int id)

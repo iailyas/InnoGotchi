@@ -63,10 +63,10 @@ namespace InnoGotchiWebAPI.Controllers
         {
             return await farmService.UpdateFarmProp(id,farm);
         }
-        [HttpPut("/stats")]
-        public async Task<Farm> UpdateStats(int id, int alive, int dead)
-        {
-            return null; //await farmService.UpdateStats(id, farm);
-        }
+        //[HttpPut("/stats")]
+        //public async Task<Farm> UpdateStats(int id, int alive, int dead)
+        //{
+        //    return null; //await farmService.UpdateStats(id, farm);
+        //}
     }
 }
