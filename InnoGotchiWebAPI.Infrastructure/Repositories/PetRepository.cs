@@ -93,6 +93,12 @@ namespace InnoGotchiWebAPI.Infrastructure.Repositories
         public async Task Delete(int id)
         {
             var pet = await FindById(id);
+            var tamagochis = await context.Tamagochis.AsNoTracking().Where(c => c.PetId == id).ToListAsync();
+            context.RemoveRange(tamagochis);
+            //foreach (var tamagoch in tamagochis)
+            //{
+            //    context.Remove(tamagoch);
+            //}
             context.Remove(pet);
             await context.SaveChangesAsync();
         }
